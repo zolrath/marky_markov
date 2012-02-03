@@ -2,6 +2,9 @@
 require_relative 'marky-markov/markov-dictionary'
 require_relative 'marky-markov/sentence-generator'
 
-dict = MarkovDictionary.new(ARGV[0])
+file = ARGV[0] || "frank.txt"
+wordcount = ARGV[1] || 200
+
+dict = MarkovDictionary.new(file)
 sentence = SentenceGenerator.new(dict.dictionary)
-puts sentence.generate(ARGV[1].to_i)
+puts sentence.generate(wordcount)
