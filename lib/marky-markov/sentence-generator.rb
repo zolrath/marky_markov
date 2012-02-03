@@ -1,30 +1,3 @@
-class MarkovDictionary
-  def initialize
-    @dictionary = {}
-    self.parse_sentence
-  end
-
-  def add_word(rootword, followedby)
-    @dictionary[rootword] ||= Hash.new(0)
-    @dictionary[rootword][followedby] += 1
-  end
-
-  def read_file(filename)
-    File.open(filename, "r").read.split
-  end
-
-  def parse_sentence()
-    @contents = read_file("frank.txt")
-    (@contents.length-1).times do |i|
-      self.add_word(@contents[i], @contents[i+1])
-    end
-  end
-
-  def chain
-    @dictionary
-  end
-end
-
 class SentenceGenerator
   def initialize(dictionary)
     @dictionary = dictionary
@@ -55,9 +28,4 @@ class SentenceGenerator
     end
     @sentence.join(' ')
   end
-
 end
-
-dict = MarkovDictionary.new
-sentence = SentenceGenerator.new(dict.chain)
-puts sentence.generate(100)
