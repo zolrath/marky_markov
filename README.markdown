@@ -9,4 +9,5 @@ Usage:
 As of now you must be in the /lib directory and run marky-markov.rb.
 You can optionally pass it the name of a text file and the number of words to generate, if excluded it will default to "frank.txt" and 200 words.
 To generate a 100 long sentence based off the file "other-file.txt" run
+
 > ruby marky-markov.rb "other-file.txt" 100
