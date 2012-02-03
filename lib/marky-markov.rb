@@ -7,4 +7,4 @@ wordcount = ARGV[1] || 200
 
 dict = MarkovDictionary.new(file)
 sentence = SentenceGenerator.new(dict.dictionary)
-puts sentence.generate(wordcount)
+puts sentence.generate(wordcount.to_i)
