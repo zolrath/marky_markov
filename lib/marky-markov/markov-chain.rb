@@ -14,7 +14,7 @@ class MarkovDictionary
   end
 
   def parse_sentence()
-    @contents = read_file("markov.txt")
+    @contents = read_file("frank.txt")
     (@contents.length-1).times do |i|
       self.add_word(@contents[i], @contents[i+1])
     end
@@ -36,20 +36,21 @@ class SentenceGenerator
     keys[rand(keys.length)]
   end
 
-  def weighted_random_word(lastword)
+  def weighted_random(lastword)
     total = @dictionary[lastword].values.inject(0) { |sum, value| sum + value }
     random = rand(total)+1
-    @dictionary[lastword].each do |key, value|
-      total -= value
-      if total <= 0
-        key
+
+    @dictionary[lastword].each do |word, occurs|
+      random -= occurs
+      if random <= 0
+        return word
       end
     end
   end
 
   def generate(wordcount)
     @sentence << random_word
-    (wordcount-1).times do
+    wordcount.times do |_|
       @sentence << weighted_random(@sentence.last)
     end
     @sentence.join(' ')
@@ -59,4 +60,4 @@ end
 
 dict = MarkovDictionary.new
 sentence = SentenceGenerator.new(dict.chain)
-sentence.generate(20)
+puts sentence.generate(100)
