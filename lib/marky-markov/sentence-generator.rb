@@ -1,7 +1,6 @@
 class SentenceGenerator
   def initialize(dictionary)
     @dictionary = dictionary
-    @sentence = []
   end
 
   def random_word
@@ -25,12 +24,11 @@ class SentenceGenerator
   end
 
   def generate(wordcount)
-    @sentence << random_word
+    sentence = []
+    sentence << random_word
     (wordcount-1).times do
-      @sentence << weighted_random(@sentence.last)
+      sentence << weighted_random(sentence.last)
     end
-    result = @sentence.join(' ')
-    @sentence.clear
-    result
+    sentence.join(' ')
   end
 end
