@@ -10,9 +10,12 @@ class SentenceGenerator
   end
 
   def weighted_random(lastword)
+    # If word has no words in its dictionary (last word in source text file)
+    # have it pick a random word to display instead.
     total = @dictionary[lastword].values.inject(0) { |sum, value| sum + value }
-    random = rand(total)+1
+    return random_word if total.zero?
 
+    random = rand(total)+1
     @dictionary[lastword].each do |word, occurs|
       random -= occurs
       if random <= 0
@@ -23,7 +26,7 @@ class SentenceGenerator
 
   def generate(wordcount)
     @sentence << random_word
-    wordcount.times do |_|
+    wordcount.times do
       @sentence << weighted_random(@sentence.last)
     end
     @sentence.join(' ')
