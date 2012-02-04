@@ -18,6 +18,7 @@ class MarkovDictionary
 
   def add_word(rootword, followedby)
     @dictionary[rootword] ||= Hash.new(0)
+    @dictionary[rootword][followedby] ||= 0
     @dictionary[rootword][followedby] += 1
   end
 
