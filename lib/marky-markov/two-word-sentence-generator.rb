@@ -1,10 +1,11 @@
+require_relative 'sentence-generator'
+
 class TwoWordSentenceGenerator < SentenceGenerator
   def generate(wordcount)
     sentence = []
-    x, y = random_word.split
-    sentence << x << y
+    sentence.concat(random_word.split)
     (wordcount-1).times do
-      sentence << weighted_random("#{sentence[sentence.length-2]} #{sentence.last}")
+      sentence.concat(weighted_random(sentence.last(2).join(' ')).split)
     end
     sentence.join(' ')
   end
