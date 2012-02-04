@@ -1,16 +1,19 @@
 class MarkovDictionary
-  def initialize(file)
-    @filename = file
+  def initialize(source)
     @dictionary = {}
-    self.parse_file
+    self.parse_source(source)
   end
 
   def dictionary
     @dictionary
   end
 
-  def open_file(file)
-    File.open(file, "r").read.split
+  def open_source(source)
+    if File.exists?(source)
+      File.open(source, "r").read.split
+    else
+      puts "#{source} does not exist!"
+    end
   end
 
   def add_word(rootword, followedby)
@@ -18,9 +21,9 @@ class MarkovDictionary
     @dictionary[rootword][followedby] += 1
   end
 
-  def parse_file()
+  def parse_source(source)
     # Special case for last word in source file as it has no words following it.
-    @contents = open_file(@filename)
+    @contents = open_source(source)
     (@contents.length-1).times do |i|
       self.add_word(@contents[i], @contents[i+1])
     end
