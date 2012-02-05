@@ -9,7 +9,7 @@ if __FILE__ == $0
   wordcount = ARGV[0] || 200
   source = ARGV[1]
 
-  if source.nil?
+  if source.nil? || source == "dictionary"
     if File.exists?('dictionary')
       dict = PersistentDictionary.new('dictionary')
     else
