@@ -38,7 +38,7 @@ if __FILE__ == $0
       exit
     end
   end
-  
+
   opt_parser.parse!
 
   case ARGV[0]
@@ -62,10 +62,18 @@ if __FILE__ == $0
     dict.save_dictionary!
     STDOUT.puts "Added #{source} to dictionary."
   when "listen"
-    dict = TwoWordDictionary.new(STDIN.read, false)
+    puts ARGV[1]
+    puts "ok"
+    dict = TwoWordDictionary.new(ARGV[1], false)
     sentence = TwoWordSentenceGenerator.new(dict.dictionary)
     STDOUT.puts sentence.generate(options[:wordcount])
   else
-    STDOUT.puts opt_parser
+    unless STDIN.tty?
+      dict = TwoWordDictionary.new(STDIN.read, false)
+      sentence = TwoWordSentenceGenerator.new(dict.dictionary)
+      STDOUT.puts sentence.generate(options[:wordcount])
+    else
+      STDOUT.puts opt_parser
+    end
   end
 end
