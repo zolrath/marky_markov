@@ -12,6 +12,7 @@ if __FILE__ == $0
     opts.separator ""
     opts.separator "Commands:"
     opts.separator "    speak: Generate Markov Chain sentence (default wordcount of 200)"
+    opts.separator "    listen [sentence]: Generate Markov Chain sentence from supplied string."
     opts.separator "    read [file]: Add words to dictionary from supplied text file"
     opts.separator ""
     opts.separator "Options"
@@ -27,17 +28,17 @@ if __FILE__ == $0
     end
 
     options[:source] = nil
-    opts.on('-s', '--source FILE', 
+    opts.on('-s', '--source FILE',
             'Generate and use temporary dictionary from source text') do |file|
       options[:source] = file
     end
 
     opts.on('-h', '--help', 'Display this screen') do
-      puts opt_parser
+      STDOUT.puts opt_parser
       exit
     end
   end
-
+  
   opt_parser.parse!
 
   case ARGV[0]
@@ -60,6 +61,10 @@ if __FILE__ == $0
     dict.parse_source(source)
     dict.save_dictionary!
     STDOUT.puts "Added #{source} to dictionary."
+  when "listen"
+    dict = TwoWordDictionary.new(STDIN.read, false)
+    sentence = TwoWordSentenceGenerator.new(dict.dictionary)
+    STDOUT.puts sentence.generate(options[:wordcount])
   else
     STDOUT.puts opt_parser
   end

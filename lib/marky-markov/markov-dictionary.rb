@@ -1,7 +1,7 @@
 class MarkovDictionary
-  def initialize(source)
+  def initialize(source, file=true)
     @dictionary = {}
-    self.parse_source(source)
+    self.parse_source(source, file)
   end
 
   class FileNotFoundError < Exception
@@ -25,9 +25,9 @@ class MarkovDictionary
     @dictionary[rootword][followedby] += 1
   end
 
-  def parse_source(source)
+  def parse_source(source, file=true)
     # Special case for last word in source file as it has no words following it.
-    contents = open_source(source)
+    contents = file ? open_source(source) : contents = source.split
     contents.each_cons(2) do |first, second|
       self.add_word(first, second)
     end
