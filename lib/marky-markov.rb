@@ -1,23 +1,66 @@
 #!/usr/bin/env ruby -i
-require_relative 'marky-markov/markov-dictionary'
-require_relative 'marky-markov/two-word-dictionary'
+#A Markov Chain generator.
+
+require 'optparse'
 require_relative 'marky-markov/persistent-dictionary'
-require_relative 'marky-markov/sentence-generator'
 require_relative 'marky-markov/two-word-sentence-generator'
 
 if __FILE__ == $0
-  wordcount = ARGV[0] || 200
-  source = ARGV[1]
+  options = {}
+  opt_parser = OptionParser.new do |opts|
+    opts.banner = "Usage: marky-markov COMMAND [OPTIONS]"
+    opts.separator ""
+    opts.separator "Commands:"
+    opts.separator "    speak: Generate Markov Chain sentence (default wordcount of 200)"
+    opts.separator "    read [file]: Add words to dictionary from supplied text file"
+    opts.separator ""
+    opts.separator "Options"
 
-  if source.nil? || source == "dictionary"
-    if File.exists?('dictionary')
-      dict = PersistentDictionary.new('dictionary')
-    else
-      puts "No source text or dictionary supplied."
+    options[:dictionary] = 'dictionary'
+    opts.on('-d', '--dictionary FILE', 'Set dictionary location') do |file|
+      options[:dictionary] = file
     end
-  else
-    dict = TwoWordDictionary.new(source)
+
+    options[:wordcount] = 200
+    opts.on('-w', '--wordcount NUMBER', 'Set number of words generated') do |number|
+      options[:wordcount] = number.to_i
+    end
+
+    options[:source] = nil
+    opts.on('-s', '--source FILE', 
+            'Generate and use temporary dictionary from source text') do |file|
+      options[:source] = file
+    end
+
+    opts.on('-h', '--help', 'Display this screen') do
+      puts opt_parser
+      exit
+    end
   end
-  sentence = TwoWordSentenceGenerator.new(dict.dictionary)
-  puts sentence.generate(wordcount.to_i)
+
+  opt_parser.parse!
+
+  case ARGV[0]
+  when "speak"
+    if options[:source]
+      dict = TwoWordDictionary.new(options[:source])
+    else
+      unless File.exists?(options[:dictionary])
+        STDERR.puts "Dictionary file #{options[:dictionary]} does not exist. Cannot generate sentence."
+        STDERR.puts "Please build a dictionary with read or use the --source option with speak."
+        exit(false)
+      end
+      dict = PersistentDictionary.new(options[:dictionary])
+    end
+    sentence = TwoWordSentenceGenerator.new(dict.dictionary)
+    STDOUT.puts sentence.generate(options[:wordcount])
+  when "read"
+    source = ARGV[1] || options[:source]
+    dict = PersistentDictionary.new(options[:dictionary])
+    dict.parse_source(source)
+    dict.save_dictionary!
+    STDOUT.puts "Added #{source} to dictionary."
+  else
+    STDOUT.puts opt_parser
+  end
 end
