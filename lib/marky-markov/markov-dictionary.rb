@@ -4,6 +4,9 @@ class MarkovDictionary
     self.parse_source(source)
   end
 
+  class FileNotFoundError < Exception
+  end
+
   def dictionary
     @dictionary
   end
@@ -12,7 +15,7 @@ class MarkovDictionary
     if File.exists?(source)
       File.open(source, "r").read.split
     else
-      puts "#{source} does not exist!"
+      raise FileNotFoundError.new("#{source} does not exist!")
     end
   end
 
