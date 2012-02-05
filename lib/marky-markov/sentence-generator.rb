@@ -33,6 +33,7 @@ class SentenceGenerator
     (wordcount-1).times do
       sentence << weighted_random(sentence.last)
     end
+    sentence.pop(sentence.length-wordcount)
     sentence.join(' ')
   end
 end

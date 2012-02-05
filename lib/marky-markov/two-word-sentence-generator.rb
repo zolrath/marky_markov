@@ -7,6 +7,7 @@ class TwoWordSentenceGenerator < SentenceGenerator
     (wordcount-1).times do
       sentence.concat(weighted_random(sentence.last(2).join(' ')).split)
     end
+    sentence.pop(sentence.length-wordcount)
     sentence.join(' ')
   end
 end
