@@ -18,7 +18,7 @@ if __FILE__ == $0
     opts.separator "Options"
 
     options[:dictionary] = 'dictionary'
-    opts.on('-d', '--dictionary FILE', 'Set dictionary location') do |file|
+    opts.on('-d', '--dictionary FILE', 'Use custom dictionary location') do |file|
       options[:dictionary] = file
     end
 
