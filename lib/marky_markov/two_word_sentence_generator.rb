@@ -1,6 +1,6 @@
-require_relative 'sentence_generator'
+require_relative 'one_word_sentence_generator'
 
-class TwoWordSentenceGenerator < SentenceGenerator
+class TwoWordSentenceGenerator < OneWordSentenceGenerator
   def generate(wordcount)
     sentence = []
     sentence.concat(random_word.split)
