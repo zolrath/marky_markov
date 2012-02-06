@@ -55,14 +55,14 @@ if __FILE__ == $0
     if options[:source]
       dict = TwoWordDictionary.new(options[:source])
     else
-      unless File.exists?(options[:dictionary])
-        STDERR.puts "Dictionary file #{options[:dictionary]} does not exist. Cannot generate sentence."
+      unless File.exists?("#{options[:dictionary]}.mmd")
+        STDERR.puts "Dictionary file #{options[:dictionary]}}.mmd does not exist. Cannot generate sentence."
         STDERR.puts "Please build a dictionary with read or use the --source option with speak."
         exit(false)
       end
       dict = PersistentDictionary.new(options[:dictionary])
     end
-    sentence = TwoWordSentenceGenerator.new(dict.dictionary)
+    sentence = TwoWordSentenceGenerator.new(dict)
     STDOUT.puts sentence.generate(options[:wordcount])
   when "read"
     source = ARGV[1] || options[:source]
@@ -72,12 +72,12 @@ if __FILE__ == $0
     STDOUT.puts "Added #{source} to dictionary."
   when "listen"
     dict = TwoWordDictionary.new((STDIN.tty? ? ARGV[1] : STDIN.read), false)
-    sentence = TwoWordSentenceGenerator.new(dict.dictionary)
+    sentence = TwoWordSentenceGenerator.new(dict)
     STDOUT.puts sentence.generate(options[:wordcount])
   else
     unless STDIN.tty?
       dict = TwoWordDictionary.new(STDIN.read, false)
-      sentence = TwoWordSentenceGenerator.new(dict.dictionary)
+      sentence = TwoWordSentenceGenerator.new(dict)
       STDOUT.puts sentence.generate(options[:wordcount])
     else
       STDOUT.puts opt_parser

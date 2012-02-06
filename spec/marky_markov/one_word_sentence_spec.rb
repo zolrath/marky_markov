@@ -3,7 +3,7 @@ require 'spec_helper.rb'
 describe OneWordSentenceGenerator do
   before(:each) do
     @dict = OneWordDictionary.new("Hello man how are you today", false)
-    @sentence = OneWordSentenceGenerator.new(@dict.dictionary)
+    @sentence = OneWordSentenceGenerator.new(@dict)
   end
 
   it "can pick a random word" do

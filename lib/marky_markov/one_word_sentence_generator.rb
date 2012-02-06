@@ -4,19 +4,19 @@ class OneWordSentenceGenerator
   end
 
   def random_word
-    keys = @dictionary.keys
+    keys = @dictionary.dictionary.keys
     keys[rand(keys.length)]
   end
 
   def weighted_random(lastword)
     # If word has no words in its dictionary (last word in source text file)
     # have it pick a random word to display instead.
-    @dictionary.fetch(lastword, random_word)
-      total = @dictionary[lastword].values.inject(:+)
+    @dictionary.dictionary.fetch(lastword, random_word)
+      total = @dictionary.dictionary[lastword].values.inject(:+)
       return random_word if total.nil?
 
       random = rand(total)+1
-      @dictionary[lastword].each do |word, occurs|
+      @dictionary.dictionary[lastword].each do |word, occurs|
         random -= occurs
         if random <= 0
           return word

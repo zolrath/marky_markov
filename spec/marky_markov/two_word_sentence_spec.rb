@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TwoWordSentenceGenerator do
   before(:each) do
     @dict = TwoWordDictionary.new("Hello man how are you today", false)
-    @sentence = TwoWordSentenceGenerator.new(@dict.dictionary)
+    @sentence = TwoWordSentenceGenerator.new(@dict)
   end
 
   it "generates a sentence of the appropriate length" do
