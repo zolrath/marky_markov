@@ -3,7 +3,7 @@ require_relative 'two_word_dictionary'
 
 class PersistentDictionary < TwoWordDictionary
   def initialize(dictionary)
-    @dictionarylocation = dictionary
+    @dictionarylocation = "#{dictionary}.mmd"
     self.open_dictionary
   end
 
@@ -21,6 +21,14 @@ class PersistentDictionary < TwoWordDictionary
     json = Yajl::Encoder.encode(@dictionary)
     File.open(@dictionarylocation, 'w') do |f|
       f.puts json
+    end
+  end
+
+  def self.delete_dictionary!(dictionary)
+    mmd = "#{dictionary}.mmd"
+    if File.exists?(mmd)
+      File.delete(mmd)
+      "Deleted #{mmd}"
     end
   end
 end
