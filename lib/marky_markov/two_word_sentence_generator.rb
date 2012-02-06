@@ -1,4 +1,4 @@
-require_relative 'sentence-generator'
+require_relative 'sentence_generator'
 
 class TwoWordSentenceGenerator < SentenceGenerator
   def generate(wordcount)

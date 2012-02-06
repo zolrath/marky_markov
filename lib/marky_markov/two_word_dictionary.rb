@@ -1,4 +1,4 @@
-require_relative 'markov-dictionary'
+require_relative 'markov_dictionary'
 
 class TwoWordDictionary < MarkovDictionary
   def parse_source(source, file=true)

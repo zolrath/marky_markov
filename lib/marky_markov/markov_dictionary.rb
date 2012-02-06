@@ -4,11 +4,11 @@ class MarkovDictionary
     self.parse_source(source, file)
   end
 
-  class FileNotFoundError < Exception
-  end
-
   def dictionary
     @dictionary
+  end
+
+  class FileNotFoundError < Exception
   end
 
   def open_source(source)

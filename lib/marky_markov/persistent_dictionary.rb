@@ -1,5 +1,5 @@
 require 'yajl'
-require_relative 'two-word-dictionary'
+require_relative 'two_word_dictionary'
 
 class PersistentDictionary < TwoWordDictionary
   def initialize(dictionary)

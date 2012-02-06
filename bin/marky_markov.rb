@@ -2,9 +2,18 @@
 #A Markov Chain generator.
 
 require 'optparse'
-require_relative 'marky-markov/persistent-dictionary'
-require_relative 'marky-markov/two-word-sentence-generator'
+require_relative 'marky_markov/persistent_dictionary'
+require_relative 'marky_markov/two_word_sentence_generator'
 
+# If used as a library
+module MarkyMarkov
+  VERSION = '0.1.0'
+  def initialize(dictionary)
+  end
+end
+
+
+# If used as a command-line application
 if __FILE__ == $0
   options = {}
   opt_parser = OptionParser.new do |opts|
@@ -17,7 +26,7 @@ if __FILE__ == $0
     opts.separator ""
     opts.separator "Options"
 
-    options[:dictionary] = 'dictionary'
+    options[:dictionary] = 'marky_markov_dictionary'
     opts.on('-d', '--dictionary FILE', 'Use custom dictionary location') do |file|
       options[:dictionary] = file
     end
@@ -33,6 +42,11 @@ if __FILE__ == $0
       options[:source] = file
     end
 
+    options[:resetdictionary] = false
+    opts.on('--reset', "WARNING: Deletes default dictionary." ) do
+      options[:resetdictionary] = true
+    end
+
     opts.on('-h', '--help', 'Display this screen') do
       STDOUT.puts opt_parser
       exit
@@ -40,6 +54,14 @@ if __FILE__ == $0
   end
 
   opt_parser.parse!
+
+  if options[:resetdictionary]
+    if File.exists?('marky_markov_dictionary')
+      File.delete('marky_markov_dictionary')
+      STDOUT.puts "Deleted marky_markov_dictionary!"
+      exit
+    end
+  end
 
   case ARGV[0]
   when "speak"
