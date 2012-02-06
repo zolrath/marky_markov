@@ -1,0 +1,1 @@
+require 'marky_markov'
