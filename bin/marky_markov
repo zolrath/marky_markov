@@ -4,83 +4,83 @@
 require 'optparse'
 require 'marky_markov'
 
-if __FILE__ == $0
-  options = {}
-  opt_parser = OptionParser.new do |opts|
-    opts.banner = "Usage: marky-markov COMMAND [OPTIONS]"
-    opts.separator ""
-    opts.separator "Commands:"
-    opts.separator "    speak: Generate Markov Chain sentence (default wordcount of 200)"
-    opts.separator "    listen [sentence]: Generate Markov Chain sentence from supplied string."
-    opts.separator "    read [file]: Add words to dictionary from supplied text file"
-    opts.separator ""
-    opts.separator "Options"
+#if __FILE__ == $0
+options = {}
+opt_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: marky-markov COMMAND [OPTIONS]"
+  opts.separator ""
+  opts.separator "Commands:"
+  opts.separator "    speak: Generate Markov Chain sentence (default wordcount of 200)"
+  opts.separator "    listen [sentence]: Generate Markov Chain sentence from supplied string."
+  opts.separator "    read [file]: Add words to dictionary from supplied text file"
+  opts.separator ""
+  opts.separator "Options"
 
-    options[:dictionary] = "#{ENV["HOME"]}/.marky_markov_dictionary"
-    opts.on('-d', '--dictionary FILE', 'Use custom dictionary location') do |file|
-      options[:dictionary] = file
-    end
-
-    options[:wordcount] = 200
-    opts.on('-w', '--wordcount NUMBER', 'Set number of words generated') do |number|
-      options[:wordcount] = number.to_i
-    end
-
-    options[:source] = nil
-    opts.on('-s', '--source FILE',
-            'Generate and use temporary dictionary from source text') do |file|
-      options[:source] = file
-    end
-
-    options[:resetdictionary] = false
-    opts.on('--reset', "WARNING: Deletes default dictionary." ) do
-      options[:resetdictionary] = true
-    end
-
-    opts.on('-h', '--help', 'Display this screen') do
-      STDOUT.puts opt_parser
-      exit
-    end
+  options[:dictionary] = "#{ENV["HOME"]}/.marky_markov_dictionary"
+  opts.on('-d', '--dictionary FILE', 'Use custom dictionary location') do |file|
+    options[:dictionary] = file
   end
 
-  opt_parser.parse!
+  options[:wordcount] = 200
+  opts.on('-w', '--wordcount NUMBER', 'Set number of words generated') do |number|
+    options[:wordcount] = number.to_i
+  end
 
-  if options[:resetdictionary]
-    STDOUT.puts MarkyMarkov::Dictionary.delete_dictionary!(options[:dictionary])
+  options[:source] = nil
+  opts.on('-s', '--source FILE',
+          'Generate and use temporary dictionary from source text') do |file|
+    options[:source] = file
+  end
+
+  options[:resetdictionary] = false
+  opts.on('--reset', "WARNING: Deletes default dictionary." ) do
+    options[:resetdictionary] = true
+  end
+
+  opts.on('-h', '--help', 'Display this screen') do
+    STDOUT.puts opt_parser
     exit
   end
+end
 
-  case ARGV[0]
-  when "speak"
-    if options[:source]
-      markov = MarkyMarkov::TemporaryDictionary.new
-      markov.parse_file(options[:source])
-    else
-      unless File.exists?("#{options[:dictionary]}.mmd")
-        STDERR.puts "Dictionary file #{options[:dictionary]}}.mmd does not exist. Cannot generate sentence."
-        STDERR.puts "Please build a dictionary with read or use the --source option with speak."
-        exit(false)
-      end
-      markov = MarkyMarkov::Dictionary.new(options[:dictionary])
-    end
-    STDOUT.puts markov.generate_n_words(options[:wordcount])
-  when "read"
-    source = ARGV[1] || options[:source]
-    markov = MarkyMarkov::Dictionary.new(options[:dictionary])
-    markov.parse_file(source)
-    markov.save_dictionary!
-    STDOUT.puts "Added #{source} to dictionary."
-  when "listen"
+opt_parser.parse!
+
+if options[:resetdictionary]
+  STDOUT.puts MarkyMarkov::Dictionary.delete_dictionary!(options[:dictionary])
+  exit
+end
+
+case ARGV[0]
+when "speak"
+  if options[:source]
     markov = MarkyMarkov::TemporaryDictionary.new
-    markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
+    markov.parse_file(options[:source])
+  else
+    unless File.exists?("#{options[:dictionary]}.mmd")
+      STDERR.puts "Dictionary file #{options[:dictionary]}}.mmd does not exist. Cannot generate sentence."
+      STDERR.puts "Please build a dictionary with read or use the --source option with speak."
+      exit(false)
+    end
+    markov = MarkyMarkov::Dictionary.new(options[:dictionary])
+  end
+  STDOUT.puts markov.generate_n_words(options[:wordcount])
+when "read"
+  source = ARGV[1] || options[:source]
+  markov = MarkyMarkov::Dictionary.new(options[:dictionary])
+  markov.parse_file(source)
+  markov.save_dictionary!
+  STDOUT.puts "Added #{source} to dictionary."
+when "listen"
+  markov = MarkyMarkov::TemporaryDictionary.new
+  markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
+  STDOUT.puts markov.generate_n_words(options[:wordcount])
+else
+  unless STDIN.tty?
+    markov = MarkyMarkov::TemporaryDictionary.new
+    markov.parse_string(STDIN.read)
     STDOUT.puts markov.generate_n_words(options[:wordcount])
   else
-    unless STDIN.tty?
-      markov = MarkyMarkov::TemporaryDictionary.new
-      markov.parse_string(STDIN.read)
-      STDOUT.puts markov.generate_n_words(options[:wordcount])
-    else
-      STDOUT.puts opt_parser
-    end
+    STDOUT.puts opt_parser
   end
 end
+#end
