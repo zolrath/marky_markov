@@ -1,5 +1,6 @@
 require_relative 'one_word_sentence_generator'
 
+# @private
 class TwoWordSentenceGenerator < OneWordSentenceGenerator
   def generate(wordcount)
     sentence = []

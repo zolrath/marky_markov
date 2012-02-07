@@ -1,3 +1,4 @@
+# @private
 class OneWordSentenceGenerator
   def initialize(dictionary)
     @dictionary = dictionary

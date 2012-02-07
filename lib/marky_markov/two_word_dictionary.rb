@@ -1,5 +1,6 @@
 require_relative 'one_word_dictionary'
 
+# @private
 class TwoWordDictionary < OneWordDictionary
   def parse_source(source, file=true)
     contents = file ? open_source(source) : contents = source.split

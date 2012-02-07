@@ -7,7 +7,6 @@ in Ruby. It can be used both from the command-line and as a library within your 
 # Installation
 
     gem install marky_markov
-    
 
 # Module Usage
 

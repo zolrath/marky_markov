@@ -1,12 +1,15 @@
+# @private
 class OneWordDictionary
   attr_accessor :dictionary
   def initialize
     @dictionary = {}
   end
 
+  # If File does not exist.
   class FileNotFoundError < Exception
   end
 
+  # Open supplied text file:
   def open_source(source)
     if File.exists?(source)
       File.open(source, "r").read.split

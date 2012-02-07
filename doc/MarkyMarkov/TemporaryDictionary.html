@@ -273,13 +273,13 @@ use.</p>
       <pre class="lines">
 
 
-15
 16
 17
-18</pre>
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@dictionary</span> <span class='op'>=</span> <span class='const'>TwoWordDictionary</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -332,12 +332,12 @@ dictionary object but removing the words it has learned.</p>
       <pre class="lines">
 
 
-50
-51
-52</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear!'>clear!</span>
   <span class='ivar'>@dictionary</span><span class='period'>.</span><span class='id identifier rubyid_dictionary'>dictionary</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
@@ -420,12 +420,12 @@ via parse_string or parse_file.</p>
       <pre class="lines">
 
 
-42
-43
-44</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_n_words'>generate_n_words</span><span class='lparen'>(</span><span class='id identifier rubyid_wordcount'>wordcount</span><span class='rparen'>)</span>
   <span class='ivar'>@sentence</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_wordcount'>wordcount</span><span class='rparen'>)</span>
@@ -490,12 +490,12 @@ dictionary.</p>
       <pre class="lines">
 
 
-24
-25
-26</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_file'>parse_file</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
   <span class='ivar'>@dictionary</span><span class='period'>.</span><span class='id identifier rubyid_parse_source'>parse_source</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -559,12 +559,12 @@ dictionary.</p>
       <pre class="lines">
 
 
-32
-33
-34</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_string'>parse_string</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='ivar'>@dictionary</span><span class='period'>.</span><span class='id identifier rubyid_parse_source'>parse_source</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -579,7 +579,7 @@ dictionary.</p>
 </div>
     
     <div id="footer">
-  Generated on Mon Feb  6 18:59:20 2012 by 
+  Generated on Mon Feb  6 22:18:54 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.5 (ruby-1.9.3).
 </div>

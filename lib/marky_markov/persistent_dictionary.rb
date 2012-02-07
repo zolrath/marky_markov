@@ -1,6 +1,7 @@
 require 'yajl'
 require_relative 'two_word_dictionary'
 
+# @private
 class PersistentDictionary < TwoWordDictionary
   def initialize(dictionary)
     @dictionarylocation = "#{dictionary}.mmd"
