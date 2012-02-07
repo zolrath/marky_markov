@@ -5,7 +5,7 @@ require_relative 'marky_markov/persistent_dictionary'
 require_relative 'marky_markov/two_word_sentence_generator'
 
 module MarkyMarkov
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   class TemporaryDictionary
     # Create a new Temporary Markov Chain Dictionary and sentence generator for use.
