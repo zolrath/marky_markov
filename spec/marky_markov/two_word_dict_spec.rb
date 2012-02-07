@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe TwoWordDictionary do
   before(:each) do
-    @dict = TwoWordDictionary.new("The cat likes pie and chainsaws", false)
+    @dict = TwoWordDictionary.new
+    @dict.parse_source("The cat likes pie and chainsaws", false)
     @textsource = "spec/test.txt"
     @stringdict = { "The cat"       => { "likes"     => 1},
                     "cat likes"     => { "pie"       => 1 },

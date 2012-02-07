@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe TwoWordSentenceGenerator do
   before(:each) do
-    @dict = TwoWordDictionary.new("Hello man how are you today", false)
+    @dict = TwoWordDictionary.new
+    @dict.parse_source("Hello man how are you today", false)
     @sentence = TwoWordSentenceGenerator.new(@dict)
   end
 

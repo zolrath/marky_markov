@@ -3,7 +3,8 @@ require 'spec_helper.rb'
 describe OneWordDictionary do
   before(:each) do
     @textsource = "spec/test.txt"
-    @dict = OneWordDictionary.new("Hello how are you doing today", false)
+    @dict = OneWordDictionary.new
+    @dict.parse_source("Hello how are you doing today", false)
     @stringdict = {"Hello"   => {"how"        => 1},
                      "how"     => {"are"        => 1},
                      "are"     => {"you"        => 1},

@@ -2,7 +2,8 @@ require 'spec_helper.rb'
 
 describe OneWordSentenceGenerator do
   before(:each) do
-    @dict = OneWordDictionary.new("Hello man how are you today", false)
+    @dict = OneWordDictionary.new
+    @dict.parse_source("Hello man how are you today", false)
     @sentence = OneWordSentenceGenerator.new(@dict)
   end
 
