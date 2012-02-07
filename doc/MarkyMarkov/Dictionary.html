@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: MarkyMarkov::Dictionary
+  
+    &mdash; Documentation by YARD 0.7.5
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (D)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../MarkyMarkov.html" title="MarkyMarkov (module)">MarkyMarkov</a></span></span>
+     &raquo; 
+    <span class="title">Dictionary</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: MarkyMarkov::Dictionary
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="TemporaryDictionary.html" title="MarkyMarkov::TemporaryDictionary (class)">TemporaryDictionary</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="TemporaryDictionary.html" title="MarkyMarkov::TemporaryDictionary (class)">TemporaryDictionary</a></span></li>
+          
+            <li class="next">MarkyMarkov::Dictionary</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/marky_markov.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_dictionary%21-class_method" title="delete_dictionary! (class method)">+ (Object) <strong>delete_dictionary!</strong>(location) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Class Method: Takes a dictionary location/name and deletes it from the
+file-system.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Dictionary) <strong>initialize</strong>(location) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Open (or create if it doesn't exist) a Persistent Markov Chain Dictionary
+and sentence generator for use.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save_dictionary%21-instance_method" title="#save_dictionary! (instance method)">- (Object) <strong>save_dictionary!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Save the Persistent Dictionary file into JSON format for later use.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="TemporaryDictionary.html" title="MarkyMarkov::TemporaryDictionary (class)">TemporaryDictionary</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="TemporaryDictionary.html#clear%21-instance_method" title="MarkyMarkov::TemporaryDictionary#clear! (method)">#clear!</a></span>, <span class='object_link'><a href="TemporaryDictionary.html#generate_n_words-instance_method" title="MarkyMarkov::TemporaryDictionary#generate_n_words (method)">#generate_n_words</a></span>, <span class='object_link'><a href="TemporaryDictionary.html#parse_file-instance_method" title="MarkyMarkov::TemporaryDictionary#parse_file (method)">#parse_file</a></span>, <span class='object_link'><a href="TemporaryDictionary.html#parse_string-instance_method" title="MarkyMarkov::TemporaryDictionary#parse_string (method)">#parse_string</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="MarkyMarkov::Dictionary (class)">Dictionary</a></span></tt>) <strong>initialize</strong>(location) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>Open (or create if it doesn't exist) a Persistent Markov Chain Dictionary
+and sentence generator for use.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'>
+<p>Create a new Persistent Dictionary object.</p>
+</div></h4>
+      <pre class="example code"><span class='id identifier rubyid_markov'>markov</span> <span class='op'>=</span> <span class='const'>MarkyMarkov</span><span class='op'>::</span><span class='const'>Dictionary</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOME</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/markov_dictionary</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 61</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
+  <span class='ivar'>@dictionary</span> <span class='op'>=</span> <span class='const'>PersistentDictionary</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
+  <span class='ivar'>@sentence</span> <span class='op'>=</span> <span class='const'>TwoWordSentenceGenerator</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@dictionary</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="delete_dictionary!-class_method">
+  
+    + (<tt>Object</tt>) <strong>delete_dictionary!</strong>(location) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong> 
+    <div class='inline'>
+<p>To ensure that someone doesn't pass in something that shouldn't be deleted
+by accident, the filetype .mmd is added to the end of the supplied
+arguement, so do not include the extension when calling the method.</p>
+</div>
+  </div>
+
+
+<p>Class Method: Takes a dictionary location/name and deletes it from the
+file-system.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'>
+<p>Delete the dictionary located at '~/markov_dictionary.mmd'</p>
+</div></h4>
+      <pre class="example code"><span class='const'>MarkyMarkov</span><span class='op'>::</span><span class='const'>Dictionary</span><span class='period'>.</span><span class='id identifier rubyid_delete_dictionary!'>delete_dictionary!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOME</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>/markov_dictionary</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>location</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>location/name of the dictionary file to be deleted.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 81</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete_dictionary!'>delete_dictionary!</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
+  <span class='const'>PersistentDictionary</span><span class='period'>.</span><span class='id identifier rubyid_delete_dictionary!'>delete_dictionary!</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="save_dictionary!-instance_method">
+  
+    - (<tt>Object</tt>) <strong>save_dictionary!</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>Save the Persistent Dictionary file into JSON format for later use.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'>
+<p>Save the dictionary to disk.</p>
+</div></h4>
+      <pre class="example code"><span class='id identifier rubyid_markov'>markov</span><span class='period'>.</span><span class='id identifier rubyid_save_dictionary!'>save_dictionary!</span></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/marky_markov.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save_dictionary!'>save_dictionary!</span>
+  <span class='ivar'>@dictionary</span><span class='period'>.</span><span class='id identifier rubyid_save_dictionary!'>save_dictionary!</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Mon Feb  6 18:59:20 2012 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.5 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
