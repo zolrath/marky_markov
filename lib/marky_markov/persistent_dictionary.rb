@@ -24,7 +24,7 @@ class PersistentDictionary < TwoWordDictionary
     end
   end
 
-  def self.delete_dictionary!(dictionary)
+  def self.delete_dictionary!(dictionary=@dictionarylocation[0...-4])
     mmd = "#{dictionary}.mmd"
     if File.exists?(mmd)
       File.delete(mmd)

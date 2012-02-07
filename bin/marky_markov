@@ -46,39 +46,39 @@ if __FILE__ == $0
   opt_parser.parse!
 
   if options[:resetdictionary]
-    STDOUT.puts PersistentDictionary.delete_dictionary!("#{ENV["HOME"]}/.marky_markov_dictionary")
+    STDOUT.puts MarkyMarkov::Dictionary.delete_dictionary!(options[:dictionary])
     exit
   end
 
   case ARGV[0]
   when "speak"
     if options[:source]
-      dict = TwoWordDictionary.new(options[:source])
+      markov = MarkyMarkov::TemporaryDictionary.new
+      markov.parse_file(options[:source])
     else
       unless File.exists?("#{options[:dictionary]}.mmd")
         STDERR.puts "Dictionary file #{options[:dictionary]}}.mmd does not exist. Cannot generate sentence."
         STDERR.puts "Please build a dictionary with read or use the --source option with speak."
         exit(false)
       end
-      dict = PersistentDictionary.new(options[:dictionary])
+      markov = MarkyMarkov::Dictionary.new(options[:dictionary])
     end
-    sentence = TwoWordSentenceGenerator.new(dict)
-    STDOUT.puts sentence.generate(options[:wordcount])
+    STDOUT.puts markov.generate_n_words(options[:wordcount])
   when "read"
     source = ARGV[1] || options[:source]
-    dict = PersistentDictionary.new(options[:dictionary])
-    dict.parse_source(source)
-    dict.save_dictionary!
+    markov = MarkyMarkov::Dictionary.new(options[:dictionary])
+    markov.parse_file(source)
+    markov.save_dictionary!
     STDOUT.puts "Added #{source} to dictionary."
   when "listen"
-    dict = TwoWordDictionary.new((STDIN.tty? ? ARGV[1] : STDIN.read), false)
-    sentence = TwoWordSentenceGenerator.new(dict)
-    STDOUT.puts sentence.generate(options[:wordcount])
+    markov = MarkyMarkov::TemporaryDictionary.new
+    markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
+    STDOUT.puts markov.generate_n_words(options[:wordcount])
   else
     unless STDIN.tty?
-      dict = TwoWordDictionary.new(STDIN.read, false)
-      sentence = TwoWordSentenceGenerator.new(dict)
-      STDOUT.puts sentence.generate(options[:wordcount])
+      markov = MarkyMarkov::TemporaryDictionary.new
+      markov.parse_string(STDIN.read)
+      STDOUT.puts markov.generate_n_words(options[:wordcount])
     else
       STDOUT.puts opt_parser
     end

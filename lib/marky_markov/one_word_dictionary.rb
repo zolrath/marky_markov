@@ -1,15 +1,7 @@
 class OneWordDictionary
-  def initialize(source, file=true)
+  attr_accessor :dictionary
+  def initialize
     @dictionary = {}
-    self.parse_source(source, file)
-  end
-
-  def dictionary
-    @dictionary
-  end
-
-  def dictionary=(other)
-    @dictionary = other
   end
 
   class FileNotFoundError < Exception
