@@ -22,6 +22,7 @@ class PersistentDictionary < TwoWordDictionary
     File.open(@dictionarylocation, 'w') do |f|
       f.puts json
     end
+    true
   end
 
   def self.delete_dictionary!(dictionary=@dictionarylocation[0...-4])
@@ -30,5 +31,6 @@ class PersistentDictionary < TwoWordDictionary
       File.delete(mmd)
       "Deleted #{mmd}"
     end
+    false
   end
 end
