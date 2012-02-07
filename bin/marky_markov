@@ -2,7 +2,7 @@
 #A Markov Chain generator.
 
 require 'optparse'
-require_relative '../lib/marky_markov'
+require 'marky_markov'
 
 if __FILE__ == $0
   options = {}
