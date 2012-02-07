@@ -9,6 +9,7 @@ module MarkyMarkov
 
   class TemporaryDictionary
     # Create a new Temporary Markov Chain Dictionary and sentence generator for use.
+    #
     # @example Create a new Temporary Dictionary.
     #   markov = MarkyMarkov::TemporaryDictionary.new
     # @return [Object] a MarkyMarkov::TemporaryDictionary object.
@@ -16,6 +17,7 @@ module MarkyMarkov
       @dictionary = TwoWordDictionary.new
       @sentence = TwoWordSentenceGenerator.new(@dictionary)
     end
+    
     # Parses a given file and adds the sentences it contains to the current dictionary.
     #
     # @example Open a text file and add its contents to the dictionary.
@@ -24,6 +26,7 @@ module MarkyMarkov
     def parse_file(location)
       @dictionary.parse_source(location, true)
     end
+    
     # Parses a given string and adds them to the current dictionary.
     #
     # @example Add a string to the dictionary.
@@ -32,6 +35,7 @@ module MarkyMarkov
     def parse_string(string)
       @dictionary.parse_source(string, false)
     end
+    
     # Generates a sentence/sentences of n words using the dictionary generated via
     # parse_string or parse_file.
     #
@@ -42,6 +46,7 @@ module MarkyMarkov
     def generate_n_words(wordcount)
       @sentence.generate(wordcount)
     end
+    
     # Clears the temporary dictionary's hash, useful for keeping
     # the same dictionary object but removing the words it has learned.
     #
@@ -62,6 +67,7 @@ module MarkyMarkov
       @dictionary = PersistentDictionary.new(location)
       @sentence = TwoWordSentenceGenerator.new(@dictionary)
     end
+    
     # Save the Persistent Dictionary file into JSON format for later use.
     #
     # @example Save the dictionary to disk.
@@ -69,6 +75,7 @@ module MarkyMarkov
     def save_dictionary!
       @dictionary.save_dictionary!
     end
+    
     # Class Method: Takes a dictionary location/name and deletes it from the file-system.
     #
     # @note To ensure that someone doesn't pass in something that shouldn't be deleted by accident,
