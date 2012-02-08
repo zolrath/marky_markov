@@ -33,11 +33,20 @@ of the dictionary name.
     puts markov.generate_n_words 10
     markov.save_dictionary! # Saves the modified dictionary/creates one if it didn't exist.
 
+If you keep look at generate_n_words and wonder why you can't put a
+number in there, well, you can!
+
+    markov.generate_20_words
+
 If you want to delete a dictionary you call it upon the Dictionary class itself while
 passing in the filename/location.
 
     MarkyMarkov::Dictionary.delete_dictionary!('dictionary')
     
+OR you can pass in a MarkyMarkov::Dictionary object directly.
+
+    MarkyMarkov::Dictionary.delete_dictionary!(markov)
+
 
 # Command-Line Usage
 

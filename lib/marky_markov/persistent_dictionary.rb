@@ -11,7 +11,7 @@ class PersistentDictionary < TwoWordDictionary
   # @return [Object] PersistentDictionary object.
   attr_reader :dictionarylocation
   def initialize(dictionary)
-    @dictionarylocation = "#{dictionary}.mmd"
+    @dictionarylocation = dictionary
     self.open_dictionary
   end
 
@@ -38,12 +38,21 @@ class PersistentDictionary < TwoWordDictionary
     true
   end
 
-  def self.delete_dictionary!(dictionary=@dictionarylocation[0...-4])
-    mmd = "#{dictionary}.mmd"
+  # Deletes the supplied dictionary file.
+  # Can either be passed the dictionary location and name, or a
+  # PersistentDictionary object.
+  # 
+  def self.delete_dictionary!(dictionary)
+    if dictionary.class == String
+      mmd = dictionary
+    else
+      mmd = dictionary.dictionarylocation
+    end
     if File.exists?(mmd)
       File.delete(mmd)
       "Deleted #{mmd}"
+    else
+      "#{mmd} does not exist."
     end
-    false
   end
 end
