@@ -15,6 +15,20 @@ class OneWordSentenceGenerator
     keys[rand(keys.length)]
   end
 
+  # Generates a random capitalized word via picking a random key from the
+  # dictionary and recurring if the word is lowercase.
+  #
+  # (see #random_word)
+  def random_capitalized_word
+    keys = @dictionary.dictionary.keys
+    x = keys[rand(keys.length)]
+    if /[A-Z]/ =~ x[0]
+      return x
+    else
+      random_capitalized_word
+    end
+  end
+
   # Returns a word based upon the likelyhood of it appearing after the supplied word.
   # 
   def weighted_random(lastword)
@@ -36,7 +50,7 @@ class OneWordSentenceGenerator
   #
   def generate(wordcount)
     sentence = []
-    sentence << random_word
+    sentence << random_capitalized_word
     (wordcount-1).times do
       sentence << weighted_random(sentence.last)
     end

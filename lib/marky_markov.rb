@@ -4,12 +4,12 @@
 require_relative 'marky_markov/persistent_dictionary'
 require_relative 'marky_markov/two_word_sentence_generator'
 
-# @version = 0.1.2
+# @version = 0.1.3
 # @author Matt Furden
 # Module containing TemporaryDictionary and Dictionary for creation of
 # Markov Chain Dictionaries and generating sentences from those dictionaries.
 module MarkyMarkov
-  VERSION = '0.1.2'
+  VERSION = '0.1.3'
 
   class TemporaryDictionary
     # Create a new Temporary Markov Chain Dictionary and sentence generator for use.
@@ -67,6 +67,7 @@ module MarkyMarkov
       end
     end
 
+    # @since 0.1.2
     # Modify respond_to? to include generate_n_words method_missing implementation.
     def respond_to?(method_sym, include_private = false)
       if method_sym.to_s =~ /^generate_(\d*)_word[s]*$/
@@ -120,7 +121,7 @@ module MarkyMarkov
     #   MarkyMarkov::Dictionary.delete_dictionary!("#{ENV["HOME"]}/markov_dictionary")
     # @example Delete the dictionary of the object 'markov'
     #   MarkyMarkov::Dictionary.delete_dictionary!(markov)
-    # @param [String] location location/name of the dictionary file to be deleted.
+    # @param [String/Object] location location/name of the dictionary file to be deleted.
     def self.delete_dictionary!(location)
       location += ".mmd" if location.class == String
       PersistentDictionary.delete_dictionary!(location)
