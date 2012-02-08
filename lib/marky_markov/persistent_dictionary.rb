@@ -29,7 +29,7 @@ class PersistentDictionary < MarkovDictionary
   def open_dictionary
     if File.exists?(@dictionarylocation)
       File.open(@dictionarylocation,'r').each do |f|
-        @depth = f[0]
+        @depth = f[0].to_i
         @dictionary = Yajl::Parser.parse(f[1..-1])
       end
     else
