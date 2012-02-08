@@ -33,7 +33,7 @@ of the dictionary name.
     puts markov.generate_n_words 10
     markov.save_dictionary! # Saves the modified dictionary/creates one if it didn't exist.
 
-If you keep look at generate_n_words and wonder why you can't put a
+If you keep looking at generate_n_words and wonder why you can't put a
 number in there, well, you can!
 
     markov.generate_20_words
