@@ -38,6 +38,18 @@ number in there, well, you can!
 
     markov.generate_20_words
 
+The default dictionary depth is two words.
+ `{"I hope"     => {"this" => 1},
+  "hope this"  => {"makes" => 1},
+  "this makes" => {"sense" => 1}}`
+but it can be set to a depth between 1 and 9 upon dictionary creation
+
+    markov = MarkyMarkov::Dictionary.new('dictionary', 3)
+
+creates a dictionary with a depth of three words.
+`{"I hope this" => {"makes" => 1},
+  "hope this makes" => {"sense" => 1}`
+
 If you want to delete a dictionary you call it upon the Dictionary class itself while
 passing in the filename/location.
 

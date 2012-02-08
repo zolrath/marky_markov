@@ -1,7 +1,8 @@
 # @private
-class OneWordSentenceGenerator
+class MarkovSentenceGenerator
   def initialize(dictionary)
     @dictionary = dictionary
+    @depth = @dictionary.depth
   end
 
   # Returns a random word via picking a random key from the dictionary.
@@ -50,10 +51,11 @@ class OneWordSentenceGenerator
   #
   def generate(wordcount)
     sentence = []
-    sentence << random_capitalized_word
+    sentence.concat(random_capitalized_word.split)
     (wordcount-1).times do
-      sentence << weighted_random(sentence.last)
+      sentence.concat(weighted_random(sentence.last(@depth).join(' ')).split)
     end
+    sentence.pop(sentence.length-wordcount)
     sentence.join(' ')
   end
 end

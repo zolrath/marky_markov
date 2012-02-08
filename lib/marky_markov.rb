@@ -2,7 +2,7 @@
 #A Markov Chain generator.
 
 require_relative 'marky_markov/persistent_dictionary'
-require_relative 'marky_markov/two_word_sentence_generator'
+require_relative 'marky_markov/markov_sentence_generator'
 
 # @version = 0.1.3
 # @author Matt Furden
@@ -13,13 +13,17 @@ module MarkyMarkov
 
   class TemporaryDictionary
     # Create a new Temporary Markov Chain Dictionary and sentence generator for use.
+    # Depth defaults to two words but can be set to any number between 1 and 9.
     #
     # @example Create a new Temporary Dictionary.
     #   markov = MarkyMarkov::TemporaryDictionary.new
-    # @return [Object] a MarkyMarkov::TemporaryDictionary object.
-    def initialize
-      @dictionary = TwoWordDictionary.new
-      @sentence = TwoWordSentenceGenerator.new(@dictionary)
+    # @example Create a three word Temporary Dictionary.
+    #   markov = MarkyMarkov::TemporaryDictionary.new(3)
+    # @param [Int] depth Optional dictionary depth. Defaults to 2.
+    # @return [Object] a MarkyMarkov::TemporaryDictionary object`.
+    def initialize(depth=2)
+      @dictionary = MarkovDictionary.new(depth)
+      @sentence = MarkovSentenceGenerator.new(@dictionary)
     end
 
     # Parses a given file and adds the sentences it contains to the current dictionary.
@@ -90,15 +94,19 @@ module MarkyMarkov
 
   class Dictionary < TemporaryDictionary
     # Open (or create if it doesn't exist) a Persistent Markov Chain Dictionary
-    # and sentence generator for use.
+    # and sentence generator for use. Optional dictionary depth may be supplied.
     #
     # @example Create a new Persistent Dictionary object.
     #   markov = MarkyMarkov::Dictionary.new("#{ENV["HOME"]}/markov_dictionary")
+    # @example Create a new Persistent Dictionary object with a depth of 4.
+    #   markov = MarkyMarkov::Dictionary.new('mmdict.mmd'. 4)
+    # @param [File] location The location the dictionary file is/will be stored.
+    # @param [Int] depth The depth of the dictionary. Defaults to 2.
     attr_reader :dictionarylocation
-    def initialize(location)
+    def initialize(location, depth=2)
       @dictionarylocation = "#{location}.mmd"
-      @dictionary = PersistentDictionary.new(@dictionarylocation)
-      @sentence = TwoWordSentenceGenerator.new(@dictionary)
+      @dictionary = PersistentDictionary.new(@dictionarylocation, depth)
+      @sentence = MarkovSentenceGenerator.new(@dictionary)
     end
 
     # Save the Persistent Dictionary file into JSON format for later use.

@@ -1,8 +1,9 @@
 # @private
-class OneWordDictionary
-  attr_accessor :dictionary
-  def initialize
+class MarkovDictionary
+  attr_accessor :dictionary, :depth
+  def initialize(depth=2)
     @dictionary = {}
+    @depth = depth
   end
 
   # If File does not exist.
@@ -36,11 +37,10 @@ class OneWordDictionary
   # @example Add a string
   #   parse_source("Hi, how are you doing?", false)
   def parse_source(source, file=true)
-    # Special case for last word in source file as it has no words following it.
     contents = file ? open_source(source) : contents = source.split
-    contents.each_cons(2) do |first, second|
-      self.add_word(first, second)
+    contents.each_cons(@depth+1) do |words|
+       self.add_word(words[0..-2].join(' '), words[-1])
     end
-    @dictionary[(contents.last)] ||= Hash.new(0)
+    @dictionary[contents.last(@depth).join(' ')] ||= Hash.new(0)
   end
 end

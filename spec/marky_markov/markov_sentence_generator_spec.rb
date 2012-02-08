@@ -1,10 +1,10 @@
 require 'spec_helper.rb'
 
-describe OneWordSentenceGenerator do
+describe MarkovSentenceGenerator do
   before(:each) do
-    @dict = OneWordDictionary.new
+    @dict = MarkovDictionary.new
     @dict.parse_source("Hello man how are you today", false)
-    @sentence = OneWordSentenceGenerator.new(@dict)
+    @sentence = MarkovSentenceGenerator.new(@dict)
   end
 
   it "can pick a random word" do

@@ -1,27 +1,36 @@
 require 'yajl'
-require_relative 'two_word_dictionary'
+require_relative 'markov_dictionary'
 
 # @private
-class PersistentDictionary < TwoWordDictionary
+class PersistentDictionary < MarkovDictionary
+
+  class DepthNotInRangeError < Exception
+  end
+
   # Creates a PersistentDictionary object using the supplied dictionary file.
   #
-  # @note Do not include the .mmd file extension in the name of the dictionary.
-  #   It will be automatically appended.
   # @param [File] dictionary Name of dictionary file to create/open.
+  # @param [Int] depth The dictionary depth. 2 word dictionary default.
   # @return [Object] PersistentDictionary object.
-  attr_reader :dictionarylocation
-  def initialize(dictionary)
+  attr_reader :dictionarylocation, :depth
+  def initialize(dictionary, depth=2)
+    @depth = depth
+    unless (1..9).include?(depth)
+      raise DepthNotInRangeError.new("Depth must be between 1 and 9")
+    end
     @dictionarylocation = dictionary
     self.open_dictionary
   end
+
 
   # Opens the dictionary objects dictionary file.
   # If the file exists it assigns the contents to a hash, 
   # otherwise it creates an empty hash.
   def open_dictionary
     if File.exists?(@dictionarylocation)
-      File.open(@dictionarylocation,'r') do |f|
-        @dictionary = Yajl::Parser.parse(f)
+      File.open(@dictionarylocation,'r').each do |f|
+        @depth = f[0]
+        @dictionary = Yajl::Parser.parse(f[1..-1])
       end
     else
       @dictionary = {}
@@ -33,7 +42,7 @@ class PersistentDictionary < TwoWordDictionary
   def save_dictionary!
     json = Yajl::Encoder.encode(@dictionary)
     File.open(@dictionarylocation, 'w') do |f|
-      f.puts json
+      f.puts @depth.to_s + json
     end
     true
   end
