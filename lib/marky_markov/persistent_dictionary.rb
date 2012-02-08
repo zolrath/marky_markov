@@ -41,18 +41,15 @@ class PersistentDictionary < TwoWordDictionary
   # Deletes the supplied dictionary file.
   # Can either be passed the dictionary location and name, or a
   # PersistentDictionary object.
-  # 
   def self.delete_dictionary!(dictionary)
-    if dictionary.class == String
-      mmd = dictionary
-    else
-      mmd = dictionary.dictionarylocation
+    if dictionary.respond_to?(:dictionarylocation)
+      dictionary = dictionary.dictionarylocation
     end
-    if File.exists?(mmd)
-      File.delete(mmd)
-      "Deleted #{mmd}"
+    if File.exists?(dictionary)
+      File.delete(dictionary)
+      "Deleted #{dictionary}"
     else
-      "#{mmd} does not exist."
+      "#{dictionary} does not exist."
     end
   end
 end

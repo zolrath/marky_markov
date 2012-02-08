@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe PersistentDictionary do
   before do
-    @dict = PersistentDictionary.new("spec/textdict")
+    @dict = PersistentDictionary.new("spec/textdict.mmd")
     @dict.parse_source("spec/test.txt")
   end
 
@@ -11,12 +11,12 @@ describe PersistentDictionary do
 end
 
   it "should be able to load an existing dictionary" do
-    otherdict = PersistentDictionary.new("spec/textdictcompare")
+    otherdict = PersistentDictionary.new("spec/textdictcompare.mmd")
      @dict.dictionary.should eql(otherdict.dictionary)
   end
 
   after do
-    PersistentDictionary.delete_dictionary!("spec/textdict")
+    PersistentDictionary.delete_dictionary!("spec/textdict.mmd")
   end
 end
 

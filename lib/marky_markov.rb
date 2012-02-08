@@ -122,6 +122,7 @@ module MarkyMarkov
     #   MarkyMarkov::Dictionary.delete_dictionary!(markov)
     # @param [String] location location/name of the dictionary file to be deleted.
     def self.delete_dictionary!(location)
+      location += ".mmd" if location.class == String
       PersistentDictionary.delete_dictionary!(location)
     end
   end
