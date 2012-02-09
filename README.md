@@ -4,8 +4,10 @@ Marky Markov and the Funky Sentences
 Marky Markov is a naïve experiment in Markov Chain generation implemented
 in Ruby. It can be used both from the command-line and as a library within your code.
 
-NOTE: If upgrading from 0.1.2 to 0.1.3, please run marky_markov --reset
-if you have built a dictionary using the command line app.
+NOTE: In the transition between 0.1.3 to 0.2.0 MarkyMarkov has added the
+ability to generate proper sentences (generate_n_sentences) instead of simply a
+maximum number of words. The command-line app has changed to sentences as its default
+behavior.
 
 # Installation
 
