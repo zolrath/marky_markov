@@ -74,15 +74,15 @@ class MarkovSentenceGenerator
     sentencecount.times do
       # Find out how many actual keys are in the dictionary.
       key_count = @dictionary.dictionary.keys.length
-      # If less than 30 keys, use that as your maximum sentence length.
-      maximum_length = key_count < 30 ? key_count : 30
+      # If less than 30 keys, use that plus five as your maximum sentence length.
+      maximum_length = key_count < 30 ? key_count + 5 : 30
       stop_at_index = sentence.count + maximum_length
       sentence.concat(random_capitalized_word.split)
       until (/[.!?]/ =~ sentence.last[-1])
         sentence.concat(weighted_random(sentence.last(@depth).join(' ')).split)
         # If a word ending with a . ! or ?  isn't found after 30 words,
         # just add a period as there may be none in the dictionary.
-        sentence << "." if sentence.count > stop_at_index
+        sentence[-1] << "." if sentence.count > stop_at_index
       end
     end
     sentence.join(' ')
