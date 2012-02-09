@@ -15,8 +15,8 @@ class PersistentDictionary < MarkovDictionary
   attr_reader :dictionarylocation, :depth
   def initialize(dictionary, depth=2)
     @depth = depth
-    unless (1..9).include?(depth)
-      raise DepthNotInRangeError.new("Depth must be between 1 and 9")
+    unless (1..5).include?(depth)
+      raise DepthNotInRangeError.new("Depth must be between 1 and 5")
     end
     @dictionarylocation = dictionary
     self.open_dictionary

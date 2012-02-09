@@ -6,35 +6,29 @@ require 'marky_markov'
 
 options = {}
 opt_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: marky-markov COMMAND [OPTIONS]"
+  opts.banner = "Usage: marky_markov COMMAND [OPTIONS]"
   opts.separator ""
   opts.separator "Commands:"
-  opts.separator "    speak: Generate Markov Chain sentence (default wordcount of 200)"
+  opts.separator "    speak: Generate Markov Chain sentence (5 sentences by default)"
   opts.separator "    listen [sentence]: Generate Markov Chain sentence from supplied string."
   opts.separator "    read [file]: Add words to dictionary from supplied text file"
   opts.separator ""
   opts.separator "Options"
 
   options[:dictionary] = "#{ENV["HOME"]}/.marky_markov_dictionary"
-  opts.on('-l', '--location DICTIONARY', 'Use custom dictionary location') do |file|
+  opts.on('-d', '--dictionary LOCATION', 'Use custom dictionary location') do |file|
     options[:dictionary] = file
   end
 
-  options[:wordcount] = 200
-  opts.on('-w', '--wordcount NUMBER', 'Set number of words generated') do |number|
-    options[:wordcount] = number.to_i
+  options[:sentencecount] = 5
+  opts.on('-c', '--sentencecount NUMBER', 'Set number of sentences generated') do |number|
+    options[:sentencecount] = number.to_i
   end
 
   options[:source] = nil
   opts.on('-s', '--source FILE',
           'Generate and use temporary dictionary from source text') do |file|
     options[:source] = file
-  end
-
-  options[:depth] = 2
-  opts.on('-d', '--depth 1-9', 'Set dictionary depth. The higher the number
-          , the less random the sentence will be. Must be between 1 and 9.') do |number|
-    options[:depth] = number.to_i
   end
 
   options[:resetdictionary] = false
@@ -58,7 +52,7 @@ end
 case ARGV[0]
 when "speak"
   if options[:source]
-    markov = MarkyMarkov::TemporaryDictionary.new(options[:depth])
+    markov = MarkyMarkov::TemporaryDictionary.new
     markov.parse_file(options[:source])
   else
     unless File.exists?("#{options[:dictionary]}.mmd")
@@ -68,22 +62,22 @@ when "speak"
     end
     markov = MarkyMarkov::Dictionary.new(options[:dictionary])
   end
-  STDOUT.puts markov.generate_n_words(options[:wordcount])
+  STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
 when "read"
   source = ARGV[1] || options[:source]
-  markov = MarkyMarkov::Dictionary.new(options[:dictionary], options[:depth])
+  markov = MarkyMarkov::Dictionary.new(options[:dictionary])
   markov.parse_file(source)
   markov.save_dictionary!
   STDOUT.puts "Added #{source} to dictionary."
 when "listen"
   markov = MarkyMarkov::TemporaryDictionary.new
   markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
-  STDOUT.puts markov.generate_n_words(options[:wordcount])
+  STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
 else
   unless STDIN.tty?
-    markov = MarkyMarkov::TemporaryDictionary.new(options[:depth])
+    markov = MarkyMarkov::TemporaryDictionary.new
     markov.parse_string(STDIN.read)
-    STDOUT.puts markov.generate_n_words(options[:wordcount])
+    STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
   else
     STDOUT.puts opt_parser
   end

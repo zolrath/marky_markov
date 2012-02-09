@@ -20,8 +20,8 @@ temporary dictionary that will not be saved to disk.
     markov = MarkyMarkov::TemporaryDictionary.new
     markov.parse_string "These words will be added to the temporary dictionary."
     markov.parse_file "filename.txt"
-    puts markov.generate_n_words 50
-    puts markov.generate_n_words 3000
+    puts markov.generate_n_sentences 5
+    puts markov.generate_n_words 200
     markov.clear!
     
 Dictionary creates or opens a persistent dictionary at a location defined by its 
@@ -34,18 +34,22 @@ of the dictionary name.
     markov.parse_file "ENV["HOME"]/Documents/largefileindocs.txt"
     markov.parse_file "anotherfileyay.txt"
     puts markov.generate_n_words 10
+    puts markov.generate_n_sentences 2
     markov.save_dictionary! # Saves the modified dictionary/creates one if it didn't exist.
 
-If you keep looking at generate_n_words and wonder why you can't put a
+If you keep looking at generate_n_words or generate_n_sentences and wonder why you can't put a
 number in there, well, you can!
 
+    markov.generate_7_sentences
     markov.generate_20_words
 
 The default dictionary depth is two words.
  `{"I hope"     => {"this" => 1},
   "hope this"  => {"makes" => 1},
   "this makes" => {"sense" => 1}}`
-but it can be set to a depth between 1 and 9 upon dictionary creation
+but it can be set to a depth between 1 and 5 upon dictionary creation,
+though really any higher than 3 and it starts to simply print passages
+from the source text.
 
     markov = MarkyMarkov::Dictionary.new('dictionary', 3)
 
@@ -75,18 +79,18 @@ on different files to continue adding to your dictionary file.
 
 ## Say Some Words
 
-    marky_markov speak -w 30
+    marky_markov speak -c 3
 
-Will use the dictionary to create a 30 word long sentence. If no number
-is passed it will default to 200 words.
+Will use the dictionary to create three sentences. If no number
+is passed it will default to five sentences..
 
 ## Temporary Dictionaries 
 
-    marky_markov speak -s other-file.txt -w 20
+    marky_markov speak -s other-file.txt -c 8
 
 Generates a temporary dictionary based on the source file passed to it
 and uses that to speak. Here we're loading other-file.txt and
-restricting the generated sentence to 20 words.
+restricting the generated text to 8 sentences.
 
 ## STDIN, Pipe Away!
 
@@ -102,12 +106,15 @@ though the results are nonsense without a substantial text base to work
 from.
 
     Usage: marky_markov COMMAND [OPTIONS]
-        Commands:
-            speak: Generate Markov Chain sentence (default wordcount of 200)
-            listen [sentence]: Generate Markov Chain sentence from supplied string.
-            read [file]: Add words to dictionary from supplied text file
-        Options
-            -d, --dictionary FILE            Use custom dictionary location
-            -w, --wordcount NUMBER           Set number of words generated
-            -s, --source FILE                Generate and use temporary dictionary from source text
-            -h, --help                       Display this screen
+
+    Commands:
+        speak: Generate Markov Chain sentence (5 sentences by default)
+        listen [sentence]: Generate Markov Chain sentence from supplied string.
+        read [file]: Add words to dictionary from supplied text file
+
+    Options
+        -d, --dictionary LOCATION        Use custom dictionary location
+        -c, --sentencecount NUMBER       Set number of sentences generated
+        -s, --source FILE                Generate and use temporary dictionary from source text
+            --reset                      WARNING: Deletes default dictionary.
+        -h, --help                       Display this screen
