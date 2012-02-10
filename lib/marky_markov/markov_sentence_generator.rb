@@ -39,16 +39,9 @@ class MarkovSentenceGenerator
   def weighted_random(lastword)
     # If word has no words in its dictionary (last word in source text file)
     # have it pick a random word to display instead.
-    @dictionary.dictionary.fetch(lastword, random_word)
-      total = @dictionary.dictionary[lastword].values.inject(:+)
-      return random_word if total.nil?
-      random = rand(total)+1
-      @dictionary.dictionary[lastword].each do |word, occurs|
-        random -= occurs
-        if random <= 0
-          return word
-        end
-      end
+    if word = @dictionary.dictionary[lastword]
+      word.sample
+    end
   end
 
   # Generates a sentence of (wordcount) length using the weighted_random function.
@@ -57,9 +50,13 @@ class MarkovSentenceGenerator
   # @return [String] the words, hopefully forming sentences generated.
   def generate(wordcount)
     sentence = []
-    sentence.concat(random_capitalized_word.split)
+    sentence.concat(random_capitalized_word)
     (wordcount-1).times do
-      sentence.concat(weighted_random(sentence.last(@depth).join(' ')).split)
+      if word = weighted_random(sentence.last(@depth))
+        sentence << word
+      else
+        sentence.concat(random_capitalized_word)
+      end
     end
     sentence.pop(sentence.length-wordcount)
     sentence.join(' ')
@@ -77,12 +74,13 @@ class MarkovSentenceGenerator
       # If less than 30 keys, use that plus five as your maximum sentence length.
       maximum_length = key_count < 30 ? key_count + 5 : 30
       stop_at_index = sentence.count + maximum_length
-      sentence.concat(random_capitalized_word.split)
+      sentence.concat(random_capitalized_word)
       until (/[.!?]/ =~ sentence.last[-1])
-        sentence.concat(weighted_random(sentence.last(@depth).join(' ')).split)
+        word = weighted_random(sentence.last(@depth))
+        sentence << word unless word.nil?
         # If a word ending with a . ! or ?  isn't found after 30 words,
         # just add a period as there may be none in the dictionary.
-        sentence[-1] << "." if sentence.count > stop_at_index
+        sentence[-1] << "." if word.nil? || sentence.count > stop_at_index
       end
     end
     sentence.join(' ')

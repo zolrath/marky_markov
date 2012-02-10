@@ -24,9 +24,8 @@ class MarkovDictionary
   # @example Adding a word
   #   add_word("Hello", "world")
   def add_word(rootword, followedby)
-    @dictionary[rootword] ||= Hash.new(0)
-    @dictionary[rootword][followedby] ||= 0
-    @dictionary[rootword][followedby] += 1
+    @dictionary[rootword] ||= []
+    @dictionary[rootword] << followedby
   end
 
   # Given a source of text, be it a text file (file=true) or a string (file=false)
@@ -39,8 +38,8 @@ class MarkovDictionary
   def parse_source(source, file=true)
     contents = file ? open_source(source) : contents = source.split
     contents.each_cons(@depth+1) do |words|
-       self.add_word(words[0..-2].join(' '), words[-1])
+       self.add_word(words[0..-2], words[-1])
     end
-    @dictionary[contents.last(@depth).join(' ')] ||= Hash.new(0)
+    @dictionary[contents.last(@depth)] ||= []
   end
 end

@@ -1,4 +1,4 @@
-require 'yajl'
+require 'ox'
 require_relative 'markov_dictionary'
 
 # @private
@@ -28,10 +28,9 @@ class PersistentDictionary < MarkovDictionary
   # otherwise it creates an empty hash.
   def open_dictionary
     if File.exists?(@dictionarylocation)
-      File.open(@dictionarylocation,'r').each do |f|
-        @depth = f[0].to_i
-        @dictionary = Yajl::Parser.parse(f[1..-1])
-      end
+      file = File.new(@dictionarylocation, 'r').read
+        @depth = file[0].to_i
+        @dictionary = Ox.parse_obj(file[1..-1])
     else
       @dictionary = {}
     end
@@ -40,9 +39,9 @@ class PersistentDictionary < MarkovDictionary
   # Saves the PersistentDictionary objects @dictionary hash 
   # to disk in JSON format.
   def save_dictionary!
-    json = Yajl::Encoder.encode(@dictionary)
+    packed = Ox.dump(@dictionary)
     File.open(@dictionarylocation, 'w') do |f|
-      f.puts @depth.to_s + json
+      f.write @depth.to_s + packed
     end
     true
   end

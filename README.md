@@ -4,6 +4,12 @@ Marky Markov and the Funky Sentences
 Marky Markov is a naïve experiment in Markov Chain generation implemented
 in Ruby. It can be used both from the command-line and as a library within your code.
 
+NOTE: 0.3.0 now uses arrays with multiple entries per word instead of a
+hash key for each word with the value representing number of occurences.
+While a less elegant solution, it leads to faster text generation. We
+are also now using msgpack instead of yajl-json to store the dictionary
+which should lead to faster usage in the command-line app.
+
 NOTE: In the transition between 0.1.3 to 0.2.0 MarkyMarkov has added the
 ability to generate proper sentences (generate_n_sentences) instead of simply a
 maximum number of words. The command-line app has changed to sentences as its default
@@ -46,9 +52,9 @@ number in there, well, you can!
     markov.generate_20_words
 
 The default dictionary depth is two words.
- `{"I hope"     => {"this" => 1},
-  "hope this"  => {"makes" => 1},
-  "this makes" => {"sense" => 1}}`
+ `{["I", "hope"]    => ["this"],
+  ["hope", "this"]  => ["makes"],
+  ["this", "makes"] => ["sense"]}`
 but it can be set to a depth between 1 and 5 upon dictionary creation,
 though really any higher than 3 and it starts to simply print passages
 from the source text.
@@ -56,8 +62,8 @@ from the source text.
     markov = MarkyMarkov::Dictionary.new('dictionary', 3)
 
 creates a dictionary with a depth of three words.
-`{"I hope this" => {"makes" => 1},
-  "hope this makes" => {"sense" => 1}`
+`{["I", "hope", "this"]     => ["makes"],
+  ["hope", "this", "makes"] => ["sense"]`
 
 If you want to delete a dictionary you call it upon the Dictionary class itself while
 passing in the filename/location.

@@ -5,19 +5,13 @@ describe MarkovDictionary do
     before(:each) do
       @onetextsource = "spec/test.txt"
       @onedict = MarkovDictionary.new(1)
-      @onedict.parse_source("Hello how are you doing today", false)
-      @onestringdict = {"Hello"   => {"how"        => 1},
-                        "how"     => {"are"        => 1},
-                        "are"     => {"you"        => 1},
-                        "you"     => {"doing"      => 1},
-                        "doing"   => {"today"      => 1},
-                        "today"   => {} }
-      @onetextdict = {"The" => {"cat"=>1},
-                      "and" => {"chainsaws"=>1},
-                      "cat" => {"likes"=>1},
-                      "chainsaws" => {},
-                      "likes" => {"pie"=>1},
-                      "pie" => {"and"=>1} }
+      @onedict.parse_source("The cat likes pie and chainsaws", false)
+      @onetextdict = { ["The"] => ["cat"],
+                       ["cat"] => ["likes"],
+                     ["likes"] => ["pie"],
+                       ["pie"] => ["and"],
+                       ["and"] => ["chainsaws"],
+                 ["chainsaws"] => []}
     end
 
     it "can open a file" do
@@ -30,8 +24,8 @@ describe MarkovDictionary do
     end
 
     it "can add a word to the dictionary" do
-      @onedict.add_word("to", "be")
-      @onedict.dictionary.should include("to" => {"be" => 1})
+      @onedict.add_word(["to"], "be")
+      @onedict.dictionary.should include(["to"] => ["be"])
     end
 
     it "create a dictionary via parsing a text file" do
@@ -41,7 +35,7 @@ describe MarkovDictionary do
     end
 
     it "builds a one word dictionary properly" do
-      @onedict.dictionary.should eql(@onestringdict)
+      @onedict.dictionary.should eql(@onetextdict)
     end
   end
 
@@ -50,21 +44,16 @@ describe MarkovDictionary do
       @twodict = MarkovDictionary.new
       @twodict.parse_source("The cat likes pie and chainsaws", false)
       @twotextsource = "spec/test.txt"
-      @twostringdict = { "The cat"       => { "likes"     => 1},
-                         "cat likes"     => { "pie"       => 1 },
-                         "likes pie"     => {"and"        => 1 },
-                         "pie and"       => { "chainsaws" => 1 },
-                         "and chainsaws" => {} }
-      @twotextdict = {"The cat"          => {"likes"      => 1},
-                      "cat likes"        => {"pie"        => 1},
-                      "likes pie"        => {"and"        => 1},
-                      "pie and"          => {"chainsaws"  => 1},
-                      "and chainsaws"    => {}}
+      @twotextdict = {["The", "cat"] => ["likes"],
+                  ["and", "chainsaws"] => [],
+                      ["cat", "likes"] => ["pie"],
+                      ["likes", "pie"] => ["and"],
+                        ["pie", "and"] => ["chainsaws"]}
     end
 
     it "can add a word to the two-word dictionary" do
-      @twodict.add_word("Zebras like", "kung-fu")
-      @twodict.dictionary.should eql(@twostringdict.merge( {"Zebras like" => {"kung-fu" => 1}} ))
+      @twodict.add_word(["Zebras", "like"], "kung-fu")
+      @twodict.dictionary.should eql(@twotextdict.merge( {["Zebras", "like"] => ["kung-fu"]} ))
     end
 
     it "create a two-word dictionary via parsing a text file" do
