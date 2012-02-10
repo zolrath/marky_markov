@@ -66,6 +66,7 @@ Gem::Specification.new do |s|
     lib/marky_markov/markov_dictionary.rb
     lib/marky_markov/markov_sentence_generator.rb
     lib/marky_markov/persistent_dictionary.rb
+    marky_markov.gemspec
     spec/marky_markov/markov_dictionary_spec.rb
     spec/marky_markov/markov_sentence_generator_spec.rb
     spec/marky_markov/persistent_dictionary_spec.rb
