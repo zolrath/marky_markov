@@ -7,8 +7,8 @@ in Ruby. It can be used both from the command-line and as a library within your 
 NOTE: 0.3.0 now uses arrays with multiple entries per word instead of a
 hash key for each word with the value representing number of occurences.
 While a less elegant solution, it leads to faster text generation. We
-are also now using msgpack instead of yajl-json to store the dictionary
-which should lead to faster usage in the command-line app.
+are also now using ox instead of yajl-json to store the dictionary
+as yajl-json does not appear to support arrays within hashes properly.
 
 NOTE: In the transition between 0.1.3 to 0.2.0 MarkyMarkov has added the
 ability to generate proper sentences (generate_n_sentences) instead of simply a
