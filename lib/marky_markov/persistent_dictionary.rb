@@ -19,6 +19,8 @@ class PersistentDictionary < MarkovDictionary # :nodoc:
       raise DepthNotInRangeError.new("Depth must be between 1 and 5")
     end
     @dictionarylocation = dictionary
+    @split_words = /([.?!])|[\s]+/
+    @split_sentence = /(?<=[.!?])\s+/
     self.open_dictionary
   end
 
