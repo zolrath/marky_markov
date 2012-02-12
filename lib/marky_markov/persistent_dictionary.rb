@@ -2,9 +2,9 @@ require 'ox'
 require_relative 'markov_dictionary'
 
 # @private
-class PersistentDictionary < MarkovDictionary
+class PersistentDictionary < MarkovDictionary # :nodoc:
 
-  class DepthNotInRangeError < Exception
+  class DepthNotInRangeError < Exception # :nodoc:
   end
 
   # Creates a PersistentDictionary object using the supplied dictionary file.

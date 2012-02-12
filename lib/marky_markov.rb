@@ -26,6 +26,12 @@ module MarkyMarkov
       @sentence = MarkovSentenceGenerator.new(@dictionary)
     end
 
+    # Returns the MarkovDictionary objects dictionary hash.
+    # @return [Hash] the MarkovDictionary hash.
+    def dictionary
+      @dictionary.dictionary
+    end
+
     # Parses a given file and adds the sentences it contains to the current dictionary.
     #
     # @example Open a text file and add its contents to the dictionary.
@@ -93,13 +99,13 @@ module MarkyMarkov
     end
 
     # @since 0.1.4
-    # Modify respond_to? to include generate_n_words and generate_n_sentences
+    # Modify respond_to_missing? to include generate_n_words and generate_n_sentences
     # method_missing implementation.
-    def respond_to?(method_sym, include_private = false)
+    def respond_to_missing?(method_sym, include_private)
       if method_sym.to_s =~ /^generate_(\d*)_word[s]*$/
-        generate_n_words($1.to_i)
+        true
       elsif method_sym.to_s =~ /^generate_(\d*)_sentence[s]*$/
-        generate_n_sentences($1.to_i)
+        true
       else
         super
       end

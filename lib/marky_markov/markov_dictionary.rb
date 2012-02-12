@@ -1,19 +1,20 @@
 # @private
-class MarkovDictionary
-  attr_accessor :dictionary, :depth
-  def initialize(depth=2)
-    @dictionary = {}
+class MarkovDictionary # :nodoc:
+  attr_reader :dictionary, :depth
+  def initialize(depth=2) @dictionary = {}
     @depth = depth
+    @split_words = /([.?!])|[\s]+/
+    @split_sentence = /(?<=[.!?])\s+/
   end
 
   # If File does not exist.
-  class FileNotFoundError < Exception
+  class FileNotFoundError < Exception # :nodoc:
   end
 
   # Open supplied text file:
   def open_source(source)
     if File.exists?(source)
-      File.open(source, "r").read.split
+      File.open(source, "r").read.split(@split_sentence)
     else
       raise FileNotFoundError.new("#{source} does not exist!")
     end
@@ -36,10 +37,12 @@ class MarkovDictionary
   # @example Add a string
   #   parse_source("Hi, how are you doing?", false)
   def parse_source(source, file=true)
-    contents = file ? open_source(source) : contents = source.split
-    contents.each_cons(@depth+1) do |words|
-       self.add_word(words[0..-2], words[-1])
+    contents = file ? open_source(source) : contents = source.split(@split_sentence)
+    contents.map! {|sentence| sentence.gsub(/["()]/,"")}
+    contents.each do |sentence|
+      sentence.split(@split_words).each_cons(@depth+1) do |words|
+        self.add_word(words[0..-2], words[-1])
+      end
     end
-    @dictionary[contents.last(@depth)] ||= []
   end
 end
