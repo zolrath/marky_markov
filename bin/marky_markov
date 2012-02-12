@@ -42,7 +42,10 @@ opt_parser = OptionParser.new do |opts|
   end
 end
 
-opt_parser.parse!
+begin opt_parser.parse!
+rescue OptionParser::InvalidOption => err
+  abort("Sorry, #{err}. Run marky_markov -h for allowed options.")
+end
 
 if options[:resetdictionary]
   STDOUT.puts MarkyMarkov::Dictionary.delete_dictionary!(options[:dictionary])
@@ -79,7 +82,9 @@ else
     markov.parse_string(STDIN.read)
     STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
   else
+    STDERR.puts "Sorry, I don't know how to #{ARGV[0]}."
     STDOUT.puts opt_parser
+    exit false
   end
 end
 #end

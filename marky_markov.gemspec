@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
   s.name              = 'marky_markov'
-  s.version           = '0.3.2'
+  s.version           = '0.3.3'
   s.date              = '2012-02-12'
   s.rubyforge_project = 'marky_markov'
 
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   ## a custom homepage, consider using your GitHub URL or the like.
   s.authors  = ["Matt Furden"]
   s.email    = 'mfurden@gmail.com'
-  s.homepage = 'http://www.thefurd.com'
+  s.homepage = 'https://github.com/zolrath/marky_markov'
 
   ## This gets added to the $LOAD_PATH so that 'lib/NAME.rb' can be required as
   ## require 'NAME.rb' or'/lib/NAME/file.rb' can be as require 'NAME/file.rb'
@@ -67,10 +67,7 @@ Gem::Specification.new do |s|
     lib/marky_markov/markov_sentence_generator.rb
     lib/marky_markov/persistent_dictionary.rb
     marky_markov.gemspec
-    spec/marky_markov/markov_dictionary_spec.rb
-    spec/marky_markov/markov_sentence_generator_spec.rb
     spec/marky_markov/marky_markov_spec.rb
-    spec/marky_markov/persistent_dictionary_spec.rb
     spec/spec_helper.rb
     spec/test.txt
     spec/textdictcompare.mmd
