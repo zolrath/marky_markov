@@ -4,12 +4,12 @@
 require_relative 'marky_markov/persistent_dictionary'
 require_relative 'marky_markov/markov_sentence_generator'
 
-# @version = 0.3.1
+# @version = 0.3.2
 # @author Matt Furden
 # Module containing TemporaryDictionary and Dictionary for creation of
 # Markov Chain Dictionaries and generating sentences from those dictionaries.
 module MarkyMarkov
-  VERSION = '0.3.1'
+  VERSION = '0.3.2'
 
   class TemporaryDictionary
     # Create a new Temporary Markov Chain Dictionary and sentence generator for use.

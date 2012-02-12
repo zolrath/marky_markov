@@ -30,7 +30,7 @@ class MarkovSentenceGenerator # :nodoc:
   # @return [String] a string containing a random dictionary key.
   def random_word
     words = @dictionary.dictionary.keys
-    words[rand(words.length)].dup
+    words[rand(words.length)]
   end
 
   # Generates a random capitalized word via picking a random key from the
@@ -44,7 +44,7 @@ class MarkovSentenceGenerator # :nodoc:
     until attempts > 15
       attempts += 1
       words = @dictionary.dictionary.keys
-      random_choice = words[rand(words.length)].dup
+      random_choice = words[rand(words.length)]
       if random_choice[0] =~ /[A-Z]/
         return random_choice
       end
@@ -57,7 +57,7 @@ class MarkovSentenceGenerator # :nodoc:
   def weighted_random(lastword)
     # If word has no words in its dictionary (last word in source text file)
     # have it pick a random word to display instead.
-    @dictionary.dictionary.fetch(lastword, NULL_OBJECT).sample.dup
+    @dictionary.dictionary.fetch(lastword, NULL_OBJECT).sample
   end
 
   def punctuation?(word)
@@ -70,11 +70,11 @@ class MarkovSentenceGenerator # :nodoc:
   # @return [String] the words, hopefully forming sentences generated.
   def generate(wordcount)
     sentence = []
+    sentence.concat(random_capitalized_word)
     (wordcount-1).times do
-      sentence.concat(random_capitalized_word)
       word = weighted_random(sentence.last(@depth))
       if punctuation?(word[0])
-        sentence.last[-1] += word[0]
+        sentence[-1] = sentence.last.dup << word
       elsif word.nil?
         sentence.concat(random_capitalized_word)
       else
@@ -102,7 +102,7 @@ class MarkovSentenceGenerator # :nodoc:
         wordcount += 1
         word = weighted_random(sentence.last(@depth))
         if punctuation?(word)
-          sentence.last[-1] += word[0]
+          sentence[-1] = sentence.last.dup << word
         else
           sentence << word
         end

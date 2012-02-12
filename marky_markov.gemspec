@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
   s.name              = 'marky_markov'
-  s.version           = '0.3.1'
+  s.version           = '0.3.2'
   s.date              = '2012-02-11'
   s.rubyforge_project = 'marky_markov'
 
@@ -69,6 +69,7 @@ Gem::Specification.new do |s|
     marky_markov.gemspec
     spec/marky_markov/markov_dictionary_spec.rb
     spec/marky_markov/markov_sentence_generator_spec.rb
+    spec/marky_markov/marky_markov_spec.rb
     spec/marky_markov/persistent_dictionary_spec.rb
     spec/spec_helper.rb
     spec/test.txt
