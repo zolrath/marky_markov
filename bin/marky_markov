@@ -56,11 +56,14 @@ case ARGV[0]
 when "speak"
   if options[:source]
     markov = MarkyMarkov::TemporaryDictionary.new
-    markov.parse_file(options[:source])
+    begin markov.parse_file(options[:source])
+    rescue MarkovDictionary::FileNotFoundError => err
+      abort("Sorry, #{err}. I can't use it as a source.")
+    end
   else
     unless File.exists?("#{options[:dictionary]}.mmd")
-      STDERR.puts "Dictionary file #{options[:dictionary]}}.mmd does not exist. Cannot generate sentence."
-      STDERR.puts "Please build a dictionary with read or use the --source option with speak."
+      STDERR.puts "Dictionary file #{options[:dictionary]}.mmd does not exist. Cannot generate sentence."
+      STDERR.puts "Please build a dictionary with read or use the --source option to build a temporary dictionary."
       exit(false)
     end
     markov = MarkyMarkov::Dictionary.new(options[:dictionary])
@@ -69,13 +72,21 @@ when "speak"
 when "read"
   source = ARGV[1] || options[:source]
   markov = MarkyMarkov::Dictionary.new(options[:dictionary])
-  markov.parse_file(source)
-  markov.save_dictionary!
-  STDOUT.puts "Added #{source} to dictionary."
+  begin
+    markov.parse_file(source)
+    markov.save_dictionary!
+    STDOUT.puts "Added #{source} to dictionary."
+  rescue MarkovDictionary::FileNotFoundError => err
+    abort("Sorry, I can't read #{source}. I'm afraid it doesn't exist!")
+  end
 when "listen"
   markov = MarkyMarkov::TemporaryDictionary.new
-  markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
-  STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
+  begin
+    markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
+    STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
+  rescue
+    abort("Not enough words to generate a sentence.")
+  end
 else
   unless STDIN.tty?
     markov = MarkyMarkov::TemporaryDictionary.new
