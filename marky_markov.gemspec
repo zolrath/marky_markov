@@ -69,8 +69,6 @@ Gem::Specification.new do |s|
     marky_markov.gemspec
     spec/marky_markov/marky_markov_spec.rb
     spec/spec_helper.rb
-    spec/test.txt
-    spec/textdictcompare.mmd
   ]
   # = MANIFEST =
 

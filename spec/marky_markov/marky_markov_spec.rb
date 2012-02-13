@@ -22,7 +22,7 @@ describe MarkyMarkov do
     end
 
     it "should be able to parse a string" do
-      @dictionary.parse_string "The cat likes pie and chainsaws!"
+     @dictionary.parse_string "The cat likes pie and chainsaws!"
       @dictionary.dictionary.should eql(@twodictcompare)
     end
 
