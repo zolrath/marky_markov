@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'marky_markov'
   s.version           = '0.3.3'
-  s.date              = '2012-02-12'
+  s.date              = '2012-02-13'
   s.rubyforge_project = 'marky_markov'
 
   ## Make sure your summary is short. The description may be as long
@@ -67,6 +67,9 @@ Gem::Specification.new do |s|
     lib/marky_markov/markov_sentence_generator.rb
     lib/marky_markov/persistent_dictionary.rb
     marky_markov.gemspec
+    spec/data/onetextdictcompare.mmd
+    spec/data/test.txt
+    spec/data/textdictcompare.mmd
     spec/marky_markov/marky_markov_spec.rb
     spec/spec_helper.rb
   ]
