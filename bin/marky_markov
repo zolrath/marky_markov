@@ -23,6 +23,9 @@ opt_parser = OptionParser.new do |opts|
   options[:sentencecount] = 5
   opts.on('-c', '--sentencecount NUMBER', 'Set number of sentences generated') do |number|
     options[:sentencecount] = number.to_i
+    if options[:sentencecount] < 1
+      abort("You must enter a number higher than 0. Try 4. Or maybe 10?")
+    end
   end
 
   options[:source] = nil
@@ -81,19 +84,15 @@ when "read"
   end
 when "listen"
   markov = MarkyMarkov::TemporaryDictionary.new
-  begin
-    markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
-    STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
-  rescue
-    abort("Not enough words to generate a sentence.")
-  end
+  markov.parse_string(STDIN.tty? ? ARGV[1] : STDIN.read)
+  STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
 else
   unless STDIN.tty?
     markov = MarkyMarkov::TemporaryDictionary.new
     markov.parse_string(STDIN.read)
     STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
   else
-    STDERR.puts "Sorry, I don't know how to #{ARGV[0]}."
+    STDERR.puts "Sorry, I don't know how to #{ARGV[0]}." if ARGV[0]
     STDOUT.puts opt_parser
     exit false
   end
