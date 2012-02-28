@@ -1,1 +1,2 @@
-require 'marky_markov'
+require_relative '../lib/marky_markov'
+require 'rspec/autorun'
