@@ -24,6 +24,8 @@ class MarkovDictionary # :nodoc:
   #
   # @example Adding a word
   #   add_word("Hello", "world")
+  # @example Adding a multi-word dictionary
+  #   add_word("You are", "awesome")
   def add_word(rootword, followedby)
     @dictionary[rootword] ||= []
     @dictionary[rootword] << followedby

@@ -25,7 +25,7 @@ temporary dictionary that will not be saved to disk.
     markov.parse_file "filename.txt"
     puts markov.generate_n_sentences 5
     puts markov.generate_n_words 200
-    markov.clear!
+    markov.clear! # Clear the temporary dictionary.
   
 ## Persistent Dictionary
     

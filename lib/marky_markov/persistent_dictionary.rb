@@ -16,7 +16,7 @@ class PersistentDictionary < MarkovDictionary # :nodoc:
   def initialize(dictionary, depth=2)
     @depth = depth
     unless (1..5).include?(depth)
-      raise DepthNotInRangeError.new("Depth must be between 1 and 5")
+      raise DepthNotInRangeError.new("Depth must be between 1 and 5. For best results, use 2.")
     end
     @dictionarylocation = dictionary
     @split_words = /([.?!])|[\s]+/
