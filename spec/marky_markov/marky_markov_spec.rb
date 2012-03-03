@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'marky_markov'
 
 describe MarkyMarkov do
   before(:each) do
