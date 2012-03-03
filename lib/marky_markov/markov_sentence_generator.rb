@@ -22,7 +22,7 @@ class MarkovSentenceGenerator # :nodoc:
     @depth = @dictionary.depth
   end
 
-  # Returns a random word vsjfia picking a random key from the dictionary.
+  # Returns a random word via picking a random key from the dictionary.
   # In the case of the TwoWordDictionary, it returns two words to ensure
   # that the sentence will have a valid two word string to pick the next
   # word from.

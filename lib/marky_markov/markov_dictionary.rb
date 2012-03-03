@@ -8,8 +8,7 @@ class MarkovDictionary # :nodoc:
   end
 
   # If File does not exist.
-  class FileNotFoundError < Exception # :nodoc:
-  end
+  class FileNotFoundError < Exception # :nodoc: ; end
 
   # Open supplied text file:
   def open_source(source)
