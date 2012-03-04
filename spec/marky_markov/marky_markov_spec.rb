@@ -2,65 +2,66 @@ require 'spec_helper'
 require 'marky_markov'
 
 describe MarkyMarkov do
-  before(:each) do
-    @textsource = "spec/data/test.txt"
-    @onedictcompare = { ["The"] => ["cat"],
-                        ["cat"] => ["likes"],
-                        ["likes"] => ["pie"],
-                        ["pie"] => ["and"],
-                        ["and"] => ["chainsaws"],
-                        ["chainsaws"] => ["!"]}
-    @twodictcompare = {["The", "cat"] => ["likes"],
-                       ["and", "chainsaws"] => ["!"],
-                       ["cat", "likes"] => ["pie"],
-                       ["likes", "pie"] => ["and"],
-                       ["pie", "and"] => ["chainsaws"]}
-  end
+
+  let(:onedictcompare) {
+    { ["The"] => ["cat"],
+      ["cat"] => ["likes"],
+      ["likes"] => ["pie"],
+      ["pie"] => ["and"],
+      ["and"] => ["chainsaws"],
+      ["chainsaws"] => ["!"]}
+  }
+  let(:twodictcompare) {
+    {["The", "cat"] => ["likes"],
+     ["and", "chainsaws"] => ["!"],
+     ["cat", "likes"] => ["pie"],
+     ["likes", "pie"] => ["and"],
+     ["pie", "and"] => ["chainsaws"]}
+  }
 
   context "TemporaryDictionary" do
-    before(:each) do
-      @dictionary = MarkyMarkov::TemporaryDictionary.new
-    end
+    let(:dictionary) { MarkyMarkov::TemporaryDictionary.new }
 
     it "should be able to parse a string" do
-     @dictionary.parse_string "The cat likes pie and chainsaws!"
-      @dictionary.dictionary.should eql(@twodictcompare)
+      dictionary.parse_string "The cat likes pie and chainsaws!"
+      dictionary.dictionary.should eql(twodictcompare)
     end
 
     it "should generate the right number of sentences" do
-      @dictionary.parse_string "Hey man. How are you doing? Let's get pie!"
-      sentence = @dictionary.generate_5_sentences
+      dictionary.parse_string "Hey man. How are you doing? Let's get pie!"
+      sentence = dictionary.generate_5_sentences
       sentence.should have(5).scan(/[.?!]/)
     end
 
     it "should create the right number of words" do
-      @dictionary.parse_string "Hey man. How are you doing? Let's get pie!"
-      sentence = @dictionary.generate_10_words
+      dictionary.parse_string "Hey man. How are you doing? Let's get pie!"
+      sentence = dictionary.generate_10_words
       sentence.split.should have(10).words
     end
   end
 
   context "PersistentDictionary" do
-    before do
-      @dictionary = MarkyMarkov::Dictionary.new("spec/data/temptextdict")
-      @dictionary.parse_file "spec/data/test.txt"
+    let!(:dictionary) do |dict|
+      MarkyMarkov::Dictionary.new("spec/data/temptextdict").tap do |d|
+        d.parse_file "spec/data/test.txt"
+      end
     end
 
     it "should be able to save a dictionary" do
-      @dictionary.save_dictionary!.should eql(true)
+      dictionary.save_dictionary!.should eql(true)
     end
 
     it "should be able to load an existing dictionary" do
       otherdict = MarkyMarkov::Dictionary.new("spec/data/textdictcompare")
-      @dictionary.dictionary.should eql(otherdict.dictionary)
+      dictionary.dictionary.should eql(otherdict.dictionary)
     end
 
     it "should load the saved dictionary" do
-      @dictionary.dictionary.should include(@twodictcompare)
+      dictionary.dictionary.should include(twodictcompare)
     end
 
     after do
-      PersistentDictionary.delete_dictionary!(@dictionary)
+      PersistentDictionary.delete_dictionary!(dictionary)
     end
   end
 end
