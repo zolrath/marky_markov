@@ -60,6 +60,16 @@ describe MarkyMarkov do
       dictionary.dictionary.should include(twodictcompare)
     end
 
+    it "should have the correct failure when dictionary is empty: words" do
+      emptydict = MarkyMarkov::Dictionary.new("spec/data/nothing")
+      -> {emptydict.generate_10_words}.should raise_error(EmptyDictionaryError)
+    end
+
+    it "should have the correct failure when dictionary is empty: sentences" do
+      emptydict = MarkyMarkov::Dictionary.new("spec/data/nothing")
+      -> {emptydict.generate_10_sentences}.should raise_error(EmptyDictionaryError)
+    end
+
     after do
       PersistentDictionary.delete_dictionary!(dictionary)
     end

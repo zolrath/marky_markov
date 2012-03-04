@@ -16,6 +16,10 @@ end
 NULL_OBJECT = NullObject.new # :nodoc:
 
 # @private
+class EmptyDictionaryError < Exception # :nodoc:
+end
+
+# @private
 class MarkovSentenceGenerator # :nodoc:
   def initialize(dictionary)
     @dictionary = dictionary
@@ -69,6 +73,9 @@ class MarkovSentenceGenerator # :nodoc:
   # @param [Int] wordcount The number of words you want the generated string to contain.
   # @return [String] the words, hopefully forming sentences generated.
   def generate(wordcount)
+    if @dictionary.dictionary.empty?
+      raise EmptyDictionaryError.new("The dictionary is empty! Parse a source file/string!")
+    end
     sentence = []
     sentence.concat(random_capitalized_word)
     (wordcount-1).times do
@@ -89,7 +96,10 @@ class MarkovSentenceGenerator # :nodoc:
   #
   # @param [Int] sentencecount The number of sentences you want the generated string to contain.
   # @return [String] the sentence(s) generated.
-  def generate_sentence(sentencecount) 
+  def generate_sentence(sentencecount)
+    if @dictionary.dictionary.empty?
+      raise EmptyDictionaryError.new("The dictionary is empty! Parse a source file/string!")
+    end
     sentence = []
     # Find out how many actual keys are in the dictionary.
     key_count = @dictionary.dictionary.keys.length
