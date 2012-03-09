@@ -67,7 +67,7 @@ describe MarkyMarkov do
 
     it "should have the correct failure when dictionary is empty: sentences" do
       emptydict = MarkyMarkov::Dictionary.new("spec/data/nothing")
-      -> {emptydict.generate_10_sentences}.should raise_error(EmptyDictionaryError)
+      expect {emptydict.generate_10_sentences}.to raise_error(EmptyDictionaryError)
     end
 
     after do

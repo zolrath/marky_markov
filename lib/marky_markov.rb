@@ -150,8 +150,8 @@ module MarkyMarkov
     # Alternatively, pass in a MarkyMarkov::Dictionary object in
     # directly and it will delete that objects dictionary from disk.
     #
-    # @note To ensure that someone doesn't pass in something that shouldn't 
-    # be deleted by accident, the filetype .mmd is added to the end of the 
+    # @note To ensure that someone doesn't pass in something that shouldn't
+    # be deleted by accident, the filetype .mmd is added to the end of the
     # supplied argument, so do not include the extension when calling the method.
     #
     # @example Delete the dictionary located at '~/markov_dictionary.mmd'
