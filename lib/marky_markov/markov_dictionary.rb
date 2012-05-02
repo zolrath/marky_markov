@@ -3,7 +3,7 @@ class MarkovDictionary # :nodoc:
   attr_reader :dictionary, :depth
   def initialize(depth=2) @dictionary = {}
     @depth = depth
-    @split_words = /([.?!])|[\s]+/
+    @split_words = /([?!])|[\s]+/
     @split_sentence = /(?<=[.!?])\s+/
   end
 

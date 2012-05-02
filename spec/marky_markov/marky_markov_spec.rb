@@ -38,6 +38,17 @@ describe MarkyMarkov do
       sentence = dictionary.generate_10_words
       sentence.split.should have(10).words
     end
+
+    context "parsing web addresses" do
+      it "should treat 'example.net' as single word" do
+        dictionary.parse_string "i am at example.net now"
+        dictionary.dictionary.values.should include( ['example.net'] )
+      end
+      it "should not break up 'example.net'" do
+        dictionary.parse_string "i am at example.net now"
+        dictionary.dictionary.values.should_not include( ['example'] )
+      end
+    end
   end
 
   context "PersistentDictionary" do
