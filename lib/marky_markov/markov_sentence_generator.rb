@@ -65,7 +65,7 @@ class MarkovSentenceGenerator # :nodoc:
   end
 
   def punctuation?(word)
-    word =~ /[.!?]/
+    ( word =~ /[!?]/ || word == '.' )
   end
 
   # Generates a sentence of (wordcount) length using the weighted_random function.
