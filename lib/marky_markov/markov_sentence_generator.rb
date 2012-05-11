@@ -82,6 +82,7 @@ class MarkovSentenceGenerator # :nodoc:
       word = weighted_random(sentence.last(@depth))
       if punctuation?(word)
         sentence[-1] = sentence.last.dup << word
+        sentence.concat(random_capitalized_word)
       elsif word.nil?
         sentence.concat(random_capitalized_word)
       else

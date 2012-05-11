@@ -83,6 +83,15 @@ describe MarkyMarkov do
         dictionary.generate_4_sentences.should_not match( /\whttp/ )
       end
     end
+    context "when using key depth of 1 word" do
+      let(:depth1dict) { MarkyMarkov::TemporaryDictionary.new(1) }
+      it "should not raise 'negative array size'" do
+        depth1dict.parse_string "short text. with many. full. stops."
+        lambda {
+          depth1dict.generate_15_words
+        }.should_not raise_error
+      end
+    end
   end
 
   context "PersistentDictionary" do
