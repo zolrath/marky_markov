@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'marky_markov'
   s.version           = '0.3.5'
-  s.date              = '2012-02-27'
+  s.date              = '2014-03-17'
   s.rubyforge_project = 'marky_markov'
 
   ## Make sure your summary is short. The description may be as long
