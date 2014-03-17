@@ -60,6 +60,7 @@ Gem::Specification.new do |s|
   ## THE MANIFEST COMMENTS, they are used as delimiters by the task.
   # = MANIFEST =
   s.files = %w[
+    MIT-LICENSE
     README.md
     bin/marky_markov
     lib/marky_markov.rb
