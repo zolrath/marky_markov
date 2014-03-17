@@ -3,7 +3,7 @@ class MarkovDictionary # :nodoc:
   attr_reader :dictionary, :depth
   def initialize(depth=2) @dictionary = {}
     @depth = depth
-    @split_words = /([.?!])|[\s]+/
+    @split_words = /(\.\s+)|(\.$)|([?!])|[\s]+/
     @split_sentence = /(?<=[.!?])\s+/
   end
 
@@ -39,7 +39,14 @@ class MarkovDictionary # :nodoc:
   # @example Add a string
   #   parse_source("Hi, how are you doing?", false)
   def parse_source(source, file=true)
-    contents = file ? open_source(source) : contents = source.split(@split_sentence)
+    if !source.nil?
+      contents = file ? open_source(source) : contents = source.split(@split_sentence)
+    else
+      contents = []
+    end
+    if( !contents.empty? && !['.', '!', '?'].include?( contents[-1].strip[-1] ) )
+      contents[-1] = contents[-1].strip + '.'
+    end
     contents.map! {|sentence| sentence.gsub(/["()]/,"")}
     contents.each do |sentence|
       sentence.split(@split_words).each_cons(@depth+1) do |words|

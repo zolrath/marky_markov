@@ -39,6 +39,50 @@ describe MarkyMarkov do
       sentence.split.should have(10).words
     end
 
+    it "should not choke on parsing empty string" do
+      lambda {
+        dictionary.parse_string ""
+      }.should_not raise_error
+    end
+
+    it "should not choke on parsing nil" do
+      lambda {
+        dictionary.parse_string nil
+      }.should_not raise_error
+    end
+    it "should raise EmptyDictionaryError if you try to generate from empty dictionary" do
+      lambda {
+        dictionary.parse_string nil
+        dictionary.generate_1_sentences
+      }.should raise_error(EmptyDictionaryError)
+    end
+
+    context "if the sentence doesn't finish with a punctuation" do
+      # null objects?
+      it "should not have trailing spaces in a row" do
+        dictionary.parse_string "I have a pen somewhere "
+        dictionary.generate_4_sentences.should_not match( /  / )
+      end
+    end
+
+    context "parsing web addresses" do
+      it "should treat 'example.net' as single word" do
+        dictionary.parse_string "i am at example.net now."
+        dictionary.dictionary.values.should include( ['example.net'] )
+      end
+      it "should not break up 'example.net'" do
+        dictionary.parse_string "i am at example.net now."
+        dictionary.dictionary.values.should_not include( ['example'] )
+      end
+    end
+
+    context "handling 'http://...'" do
+      # previously, anything containing '.' was considered punctuation
+      it "should generate sentence with space before 'http//:...'" do
+        dictionary.parse_string "I'm viewing some stuff which is at http://example.net now."
+        dictionary.generate_4_sentences.should_not match( /\whttp/ )
+      end
+    end
     context "when using key depth of 1 word" do
       let(:depth1dict) { MarkyMarkov::TemporaryDictionary.new(1) }
       it "should not raise 'negative array size'" do

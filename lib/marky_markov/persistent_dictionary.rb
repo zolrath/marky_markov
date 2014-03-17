@@ -1,4 +1,4 @@
-require 'ox'
+require 'msgpack'
 require_relative 'markov_dictionary'
 
 # @private
@@ -30,9 +30,9 @@ class PersistentDictionary < MarkovDictionary # :nodoc:
   # otherwise it creates an empty hash.
   def open_dictionary
     if File.exists?(@dictionarylocation)
-      file = File.new(@dictionarylocation, 'r').read
+      file = File.new(@dictionarylocation, 'rb').read
         @depth = file[0].to_i
-        @dictionary = Ox.parse_obj(file[1..-1])
+        @dictionary = MessagePack.unpack(file[1..-1])
     else
       @dictionary = {}
     end
@@ -41,8 +41,8 @@ class PersistentDictionary < MarkovDictionary # :nodoc:
   # Saves the PersistentDictionary objects @dictionary hash 
   # to disk in JSON format.
   def save_dictionary!
-    packed = Ox.dump(@dictionary)
-    File.open(@dictionarylocation, 'w') do |f|
+    packed = @dictionary.to_msgpack
+    File.open(@dictionarylocation, 'wb') do |f|
       f.write @depth.to_s + packed
     end
     true
