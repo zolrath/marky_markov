@@ -30,13 +30,13 @@ describe MarkyMarkov do
     it "should generate the right number of sentences" do
       dictionary.parse_string "Hey man. How are you doing? Let's get pie!"
       sentence = dictionary.generate_5_sentences
-      sentence.should have(5).scan(/[.?!]/)
+      expect(sentence.scan(/[.?!]/).size).to eq(5)
     end
 
     it "should create the right number of words" do
       dictionary.parse_string "Hey man. How are you doing? Let's get pie!"
       sentence = dictionary.generate_10_words
-      sentence.split.should have(10).words
+      expect(sentence.split.size).to eq(10)
     end
 
     it "should not choke on parsing empty string" do
