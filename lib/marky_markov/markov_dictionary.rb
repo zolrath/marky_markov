@@ -1,7 +1,10 @@
 # @private
 class MarkovDictionary # :nodoc:
-  attr_reader :dictionary, :depth
-  def initialize(depth=2) @dictionary = {}
+  attr_reader :dictionary, :depth, :capitalized_words
+  def initialize(depth=2)
+    puts "Initialize"
+    @dictionary = {}
+    @capitalized_words = []
     @depth = depth
     @split_words = /(\.\s+)|(\.$)|([?!])|[\s]+/
     @split_sentence = /(?<=[.!?])\s+/
@@ -29,6 +32,9 @@ class MarkovDictionary # :nodoc:
   def add_word(rootword, followedby)
     @dictionary[rootword] ||= []
     @dictionary[rootword] << followedby
+    if followedby == followedby.capitalize
+      @capitalized_words.push followedby
+    end
   end
 
   # Given a source of text, be it a text file (file=true) or a string (file=false)

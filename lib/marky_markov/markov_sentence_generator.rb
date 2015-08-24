@@ -37,23 +37,12 @@ class MarkovSentenceGenerator # :nodoc:
     words[rand(words.length)]
   end
 
-  # Generates a random capitalized word via picking a random key from the
-  # dictionary and recurring if the word is lowercase.
+  # Generates a random capitalized word via picking a random word from a list
+  # of known capitalized words created during dictionary generation
   #
   # (see #random_word)
   def random_capitalized_word
-    attempts = 0
-    # If you don't find a capitalized word after 15 attempts, just use
-    # a lowercase word as there may be no capitals in the dicationary.
-    until attempts > 15
-      attempts += 1
-      words = @dictionary.dictionary.keys
-      random_choice = words[rand(words.length)]
-      if random_choice[0] =~ /[A-Z]/
-        return random_choice
-      end
-    end
-    random_word
+    @dictionary.capitalized_words.sample
   end
 
   # Returns a word based upon the likelihood of it appearing after the supplied word.
@@ -77,14 +66,14 @@ class MarkovSentenceGenerator # :nodoc:
       raise EmptyDictionaryError.new("The dictionary is empty! Parse a source file/string!")
     end
     sentence = []
-    sentence.concat(random_capitalized_word)
+    sentence.push(random_capitalized_word)
     (wordcount-1).times do
       word = weighted_random(sentence.last(@depth))
       if punctuation?(word)
         sentence[-1] = sentence.last.dup << word
-        sentence.concat(random_capitalized_word)
+        sentence.push(random_capitalized_word)
       elsif word.nil?
-        sentence.concat(random_capitalized_word)
+        sentence.push(random_capitalized_word)
       else
         sentence << word
       end
@@ -108,7 +97,7 @@ class MarkovSentenceGenerator # :nodoc:
     maximum_length = key_count < 30 ? key_count + 5 : 30
     sentencecount.times do
       wordcount = 0
-      sentence.concat(random_capitalized_word)
+      sentence.push(random_capitalized_word)
       until (punctuation?(sentence.last[-1])) || wordcount > maximum_length
         wordcount += 1
         word = weighted_random(sentence.last(@depth))

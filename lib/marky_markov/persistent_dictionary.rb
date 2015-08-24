@@ -31,19 +31,25 @@ class PersistentDictionary < MarkovDictionary # :nodoc:
   def open_dictionary
     if File.exists?(@dictionarylocation)
       file = File.new(@dictionarylocation, 'rb').read
-        @depth = file[0].to_i
-        @dictionary = MessagePack.unpack(file[1..-1])
+      dictionary_pack = MessagePack.unpack(file)
+      @depth = dictionary_pack["depth"]
+      @dictionary = dictionary_pack["dictionary"]
+      @capitalized_words = dictionary_pack["capitalized_words"]
     else
       @dictionary = {}
+      @capitalized_words = []
     end
   end
 
   # Saves the PersistentDictionary objects @dictionary hash 
   # to disk in JSON format.
   def save_dictionary!
-    packed = @dictionary.to_msgpack
+    dictionary_pack = {}
+    dictionary_pack["depth"] = @depth
+    dictionary_pack["dictionary"] = @dictionary
+    dictionary_pack["capitalized_words"] = @capitalized_words
     File.open(@dictionarylocation, 'wb') do |f|
-      f.write @depth.to_s + packed
+      f.write dictionary_pack.to_msgpack
     end
     true
   end
