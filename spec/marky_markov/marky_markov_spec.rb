@@ -124,6 +124,20 @@ describe MarkyMarkov do
       expect {emptydict.generate_10_sentences}.to raise_error(EmptyDictionaryError)
     end
 
+    context "when a depth is specified" do
+      let (:test_depth) { 4 }
+      let!(:dictionary) do |dict|
+        MarkyMarkov::Dictionary.new("spec/data/temptextdict", test_depth).tap do |d|
+          d.parse_file "spec/data/test.txt"
+        end
+      end
+
+      it "should correctly set the dictionary's depth field" do
+        expect(dictionary.instance_variable_get(:@dictionary)
+          .instance_variable_get(:@depth)).to eq(test_depth)
+      end
+    end
+
     after do
       PersistentDictionary.delete_dictionary!(dictionary)
     end

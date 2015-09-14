@@ -39,6 +39,12 @@ opt_parser = OptionParser.new do |opts|
     options[:resetdictionary] = true
   end
 
+  options[:depth] = 2
+  opts.on('-p', '--depth DEPTH',
+          'Use a chaining depth (integer, default 2 is recommended)') do |depth|
+    options[:depth] = depth.to_i
+  end
+
   opts.on('-h', '--help', 'Display this screen') do
     STDOUT.puts opt_parser
     exit
@@ -58,7 +64,7 @@ end
 case ARGV[0]
 when "speak"
   if options[:source]
-    markov = MarkyMarkov::TemporaryDictionary.new
+    markov = MarkyMarkov::TemporaryDictionary.new(options[:depth])
     begin markov.parse_file(options[:source])
     rescue MarkovDictionary::FileNotFoundError => err
       abort("Sorry, #{err}. I can't use it as a source.")
@@ -69,7 +75,7 @@ when "speak"
       STDERR.puts "Please build a dictionary with read or use the --source option to build a temporary dictionary."
       exit(false)
     end
-    markov = MarkyMarkov::Dictionary.new(options[:dictionary])
+    markov = MarkyMarkov::Dictionary.new(options[:dictionary], options[:depth])
   end
   STDOUT.puts markov.generate_n_sentences(options[:sentencecount])
 when "read"
