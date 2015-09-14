@@ -2,7 +2,6 @@
 class MarkovDictionary # :nodoc:
   attr_reader :dictionary, :depth, :capitalized_words
   def initialize(depth=2)
-    puts "Initialize"
     @dictionary = {}
     @capitalized_words = []
     @depth = depth
