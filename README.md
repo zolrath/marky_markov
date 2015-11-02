@@ -75,6 +75,11 @@ OR you can pass in a MarkyMarkov::Dictionary object directly.
 
     MarkyMarkov::Dictionary.delete_dictionary!(markov)
 
+## Train from a string
+
+If you want to add to your dictionary from a string instead of a file, easy!
+    
+    markov.parse_string "I hope this makes sense."
 
 # Command-Line Usage
 
