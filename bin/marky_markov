@@ -2,7 +2,7 @@
 #A Markov Chain generator.
 
 require 'optparse'
-require 'marky_markov'
+require '../lib/marky_markov.rb'
 
 options = {}
 opt_parser = OptionParser.new do |opts|

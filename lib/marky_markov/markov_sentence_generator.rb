@@ -97,7 +97,7 @@ class MarkovSentenceGenerator # :nodoc:
     maximum_length = key_count < 30 ? key_count + 5 : 30
     sentencecount.times do
       wordcount = 0
-      sentence.push(random_capitalized_word)
+      sentence.push(*random_capitalized_word)
       until (punctuation?(sentence.last[-1])) || wordcount > maximum_length
         wordcount += 1
         word = weighted_random(sentence.last(@depth))
