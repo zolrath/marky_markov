@@ -31,9 +31,6 @@ class MarkovDictionary # :nodoc:
   def add_word(rootword, followedby)
     @dictionary[rootword] ||= []
     @dictionary[rootword] << followedby
-    if followedby == followedby.capitalize
-      @capitalized_words.push followedby
-    end
   end
 
   # Given a source of text, be it a text file (file=true) or a string (file=false)
@@ -54,6 +51,9 @@ class MarkovDictionary # :nodoc:
     end
     contents.map! {|sentence| sentence.gsub(/["()]/,"")}
     contents.each do |sentence|
+      split = sentence.split(@split_words)
+      split[0][0].upcase!
+      @capitalized_words.push split[0..@depth-1]
       sentence.split(@split_words).each_cons(@depth+1) do |words|
         self.add_word(words[0..-2], words[-1])
       end
